@@ -70,7 +70,7 @@ public class SettingsMenu : MonoBehaviour
         fxVolume = PlayerPrefs.GetInt("FxVolume", -100); ;
         if (fxVolume == -100) audioMixer.GetFloat("FxVolume", out fxVolume);
         fxSlider.value = fxVolume / 10.0f;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     // Update is called once per frame

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public enum ACTIVE_MENU
 {
     MAIN,
+    MULTIPLAYER,
     SETTINGS,
     CREDITS
 }
@@ -13,9 +14,11 @@ public enum ACTIVE_MENU
 public class InitialScreenManager : MonoBehaviour
 {
     public GameObject mainMenu;
+    public GameObject multiplayerMenu;
     public GameObject settingsMenu;
     public GameObject creditsMenu;
     public GameObject mainMenuFirstButton;
+    public GameObject multiplayerMenuFirstButton;
     public GameObject settingsMenuFirstButton;
 
     GameObject lastSelect;
@@ -24,6 +27,8 @@ public class InitialScreenManager : MonoBehaviour
     void Start()
     {
         mainMenu.SetActive(true);
+        multiplayerMenu.SetActive(false);
+        settingsMenu.SetActive(false);
         creditsMenu.SetActive(false);
     }
 
@@ -43,6 +48,10 @@ public class InitialScreenManager : MonoBehaviour
                 mainMenu.SetActive(true);
                 EventSystem.current.SetSelectedGameObject(mainMenuFirstButton);
                 break;
+            case ACTIVE_MENU.MULTIPLAYER:
+                multiplayerMenu.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(multiplayerMenuFirstButton);
+                break;
             case ACTIVE_MENU.SETTINGS:
                 settingsMenu.SetActive(true);
                 EventSystem.current.SetSelectedGameObject(settingsMenuFirstButton);
@@ -58,6 +67,7 @@ public class InitialScreenManager : MonoBehaviour
     public void CloseAllMenus()
     {
         mainMenu.SetActive(false);
+        multiplayerMenu.SetActive(false);
         settingsMenu.SetActive(false);
         creditsMenu.SetActive(false);
     }
