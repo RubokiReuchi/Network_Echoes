@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using System.Net.WebSockets;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MultiplayerMenu : MonoBehaviour
 {
@@ -11,6 +16,9 @@ public class MultiplayerMenu : MonoBehaviour
 
     public GameObject createMenu;
     public GameObject joinMenu;
+    public GameObject createPasswordInput;
+    public GameObject joinHostInput;
+    public GameObject createButton;
 
     bool workingOnRoom;
     [SerializeField] AudioSource accept;
@@ -37,6 +45,7 @@ public class MultiplayerMenu : MonoBehaviour
             {
                 createMenu.SetActive(false);
                 joinMenu.SetActive(false);
+                EventSystem.current.SetSelectedGameObject(createButton);
             }
         }
     }
@@ -45,11 +54,13 @@ public class MultiplayerMenu : MonoBehaviour
     {
         createMenu.SetActive(true);
         workingOnRoom = true;
+        EventSystem.current.SetSelectedGameObject(createPasswordInput);
     }
 
     public void JoinRoom()
     {
         joinMenu.SetActive(true);
         workingOnRoom = true;
+        EventSystem.current.SetSelectedGameObject(joinHostInput);
     }
 }
