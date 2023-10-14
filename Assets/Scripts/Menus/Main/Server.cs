@@ -34,7 +34,7 @@ public class Server : MonoBehaviour
     public void CreateTcpServer()
     {
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        connect = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6400);
+        connect = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
 
         listen.Bind(connect);
         listen.Listen(10);
