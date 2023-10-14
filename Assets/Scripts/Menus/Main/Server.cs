@@ -42,9 +42,20 @@ public class Server : MonoBehaviour
         conexion = listen.Accept();
         Console.WriteLine("Conexión aceptada");
 
-        Thread threadTcp = new Thread(RecieveTcpClient);
+        //Thread threadTcp = new Thread(RecieveTcpClient);
 
-        threadTcp.Start();
+        //threadTcp.Start();
+
+        byte[] recibir_info = new byte[1024];
+        string data = "";
+        int array_size = 0;
+
+        array_size = conexion.Receive(recibir_info, 0, recibir_info.Length, 0);
+        Array.Resize(ref recibir_info, array_size);
+        data = Encoding.Default.GetString(recibir_info);
+
+        Console.WriteLine("La info recibida es: {0}", data);
+        Console.ReadKey();
     }
 
     void RecieveTcpClient()
@@ -74,8 +85,6 @@ public class Server : MonoBehaviour
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         client = (EndPoint)(sender);
         //client = (EndPoint)sender;
-
-
 
         Thread thread = new Thread(RecieveUdpClient);
 
