@@ -28,7 +28,7 @@ public class Client : MonoBehaviour
     public void CreateTcpClient()
     {
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        connect = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6400); //IP y port tienen que ser la misma que el server
+        connect = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000); //IP y port tienen que ser la misma que el server
 
         listen.Connect(connect);
 
