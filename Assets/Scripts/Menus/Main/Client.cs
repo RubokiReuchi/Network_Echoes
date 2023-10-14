@@ -35,7 +35,7 @@ public class Client : MonoBehaviour
         byte[] enviar_info = new byte[1200];
         string data;
         Console.WriteLine("Ingrese la info a enviar");
-        data = Console.ReadLine();
+        data = "patata";
 
         enviar_info = Encoding.Default.GetBytes(data);
         listen.Send(enviar_info);
