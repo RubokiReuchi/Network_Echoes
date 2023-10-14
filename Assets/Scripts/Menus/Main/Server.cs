@@ -39,27 +39,15 @@ public class Server : MonoBehaviour
         listen.Bind(connect);
         listen.Listen(10);
 
-        conexion = listen.Accept();
-        Console.WriteLine("Conexión aceptada");
-
-        //Thread threadTcp = new Thread(RecieveTcpClient);
-
-        //threadTcp.Start();
-
-        byte[] recibir_info = new byte[1024];
-        string data = "";
-        int array_size = 0;
-
-        array_size = conexion.Receive(recibir_info, 0, recibir_info.Length, 0);
-        Array.Resize(ref recibir_info, array_size);
-        data = Encoding.Default.GetString(recibir_info);
-
-        Console.WriteLine("La info recibida es: {0}", data);
-        Console.ReadKey();
+        Thread threadTcp = new Thread(RecieveTcpClient);
+        threadTcp.Start();
     }
 
     void RecieveTcpClient()
     {
+        conexion = listen.Accept();
+        Console.WriteLine("Conexión aceptada");
+
         byte[] recibir_info = new byte[1024];
         string data = "";
         int array_size = 0;
