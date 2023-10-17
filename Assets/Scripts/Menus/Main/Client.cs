@@ -14,7 +14,8 @@ public class Client : MonoBehaviour
     Socket listen;
     IPEndPoint connect;
 
-    public InputField ip;
+    public InputField ipField;
+    public InputField passwordField;
 
     // Start is called before the first frame update
     void Start()
@@ -31,18 +32,26 @@ public class Client : MonoBehaviour
     public void CreateTcpClient()
     {
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        connect = new IPEndPoint(IPAddress.Parse(ip.text), 6000); //IP y port tienen que ser la misma que el server
-        Debug.Log("Ip: " + ip.text);
+        connect = new IPEndPoint(IPAddress.Parse(ipField.text), 6000); //IP y port tienen que ser la misma que el server
+        Debug.Log("Ip: " + ipField.text);
 
         listen.Connect(connect);
 
-        byte[] enviar_info = new byte[1200];
-        string data;
-        Console.WriteLine("Ingrese la info a enviar");
-        data = "patata";
+        byte[] recibir_info = new byte[1024];
+        string data = "";
+        int array_size = 0;
 
-        enviar_info = Encoding.Default.GetBytes(data);
+        array_size = listen.Receive(recibir_info, 0, recibir_info.Length, 0);
+        Array.Resize(ref recibir_info, array_size);
+        data = Encoding.Default.GetString(recibir_info);
+
+        byte[] enviar_info = new byte[1200];
+        string sendData;
+
+        if (data == passwordField.text) { sendData = "passwordCorrect"; Debug.Log("Conexión aceptada"); }
+        else { sendData = "passwordIncorrect"; Debug.Log("Conexión aceptada"); }
+
+        enviar_info = Encoding.Default.GetBytes(sendData);
         listen.Send(enviar_info);
-        Console.ReadKey();
     }
 }

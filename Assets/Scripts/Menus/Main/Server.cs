@@ -8,10 +8,13 @@ using UnityEngine.tvOS;
 using System;
 using System.Text;
 using System.Linq;
+using UnityEngine.UI;
 
 public class Server : MonoBehaviour
 {
     string ip;
+    public InputField passwordField;
+    string password;
 
     Socket newSocket;
     IPEndPoint ipep;
@@ -36,6 +39,8 @@ public class Server : MonoBehaviour
 
     public void CreateTcpServer()
     {
+        password = passwordField.text;
+
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         connect = new IPEndPoint(IPAddress.Parse(ip), 6000);
         Debug.Log("Ip: " + ip);
@@ -50,7 +55,14 @@ public class Server : MonoBehaviour
     void RecieveTcpClient()
     {
         conexion = listen.Accept();
-        Console.WriteLine("Conexión aceptada");
+        Debug.Log("Check Password");
+
+        byte[] enviar_info = new byte[1200];
+        string sendData;
+        sendData = password;
+
+        enviar_info = Encoding.Default.GetBytes(sendData);
+        listen.Send(enviar_info);
 
         byte[] recibir_info = new byte[1024];
         string data = "";
@@ -60,8 +72,8 @@ public class Server : MonoBehaviour
         Array.Resize(ref recibir_info, array_size);
         data = Encoding.Default.GetString(recibir_info);
 
-        Console.WriteLine("La info recibida es: {0}", data);
-        Console.ReadKey();
+        if (data == "passwordIncorrect") { conexion.Close(); Debug.Log("Conexión rechazada"); }
+        else Debug.Log("Conexión aceptada");
     }
 
     public void CreateUdpServer()
