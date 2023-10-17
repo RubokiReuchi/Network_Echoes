@@ -9,6 +9,7 @@ using System;
 using System.Text;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Server : MonoBehaviour
 {
@@ -52,6 +53,8 @@ public class Server : MonoBehaviour
 
         Thread threadTcp = new Thread(RecieveTcpClient);
         threadTcp.Start();
+
+        SceneManager.LoadScene(5);
     }
 
     void RecieveTcpClient()
