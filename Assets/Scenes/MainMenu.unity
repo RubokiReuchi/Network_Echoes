@@ -8974,6 +8974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda4a54727000b3499b19f517a237fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passwordField: {fileID: 1197143149}
 --- !u!4 &800932551
 Transform:
   m_ObjectHideFlags: 0
@@ -9001,7 +9002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf47af2921944c44d891378393ade67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ip: {fileID: 2027839606}
+  ipField: {fileID: 2027839606}
+  passwordField: {fileID: 1560180808}
 --- !u!1 &811658983
 GameObject:
   m_ObjectHideFlags: 0
