@@ -5,19 +5,45 @@ using UnityEngine;
 
 public class WaitingRoom : MonoBehaviour
 {
-    public TextMeshProUGUI ipDisplay;
-    public TextMeshProUGUI passwordDisplay;
+    int points;
+    public TextMeshProUGUI waitingPoints1;
+    public TextMeshProUGUI waitingPoints2;
+
+    public TextMeshProUGUI ipDisplay1;
+    public TextMeshProUGUI ipDisplay2;
+    public TextMeshProUGUI passwordDisplay1;
+    public TextMeshProUGUI passwordDisplay2;
 
     // Start is called before the first frame update
     void Start()
     {
-        ipDisplay.text = PlayerPrefs.GetString("LocalIP");
-        passwordDisplay.text = PlayerPrefs.GetString("RoomPassword");
+        points = 3;
+        StartCoroutine(ManagePoints());
+
+        ipDisplay1.text = "IP: " + PlayerPrefs.GetString("LocalIP");
+        ipDisplay2.text = "IP: " + PlayerPrefs.GetString("LocalIP");
+        passwordDisplay1.text = "Password: " + PlayerPrefs.GetString("RoomPassword");
+        passwordDisplay2.text = "Password: " + PlayerPrefs.GetString("RoomPassword");
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    IEnumerator ManagePoints()
+    {
+        while (true)
+        {
+            points++;
+            if (points > 3) points = 0;
+            string pointsAuxText = "";
+            for (int i = 0; i < points; i++) pointsAuxText += ".";
+            waitingPoints1.text = pointsAuxText;
+            waitingPoints2.text = pointsAuxText;
+
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }

@@ -30,7 +30,6 @@ public class MultiplayerMenu : MonoBehaviour
 
     [SerializeField] AudioSource accept;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +52,10 @@ public class MultiplayerMenu : MonoBehaviour
                 createMenu.SetActive(false);
                 joinMenu.SetActive(false);
                 EventSystem.current.SetSelectedGameObject(createButton);
+
+                // UDP
+                createMenuUDP.SetActive(false);
+                joinMenuUDP.SetActive(false);
             }
         }
     }
@@ -69,5 +72,21 @@ public class MultiplayerMenu : MonoBehaviour
         joinMenu.SetActive(true);
         workingOnRoom = true;
         EventSystem.current.SetSelectedGameObject(joinHostInput);
+    }
+
+
+    // UDP
+    public void CreateRoomUDP()
+    {
+        createMenuUDP.SetActive(true);
+        workingOnRoom = true;
+        EventSystem.current.SetSelectedGameObject(createPasswordInputUDP);
+    }
+
+    public void JoinRoomUDP()
+    {
+        joinMenuUDP.SetActive(true);
+        workingOnRoom = true;
+        EventSystem.current.SetSelectedGameObject(joinHostInputUDP);
     }
 }

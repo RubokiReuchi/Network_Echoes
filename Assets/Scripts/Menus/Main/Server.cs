@@ -27,6 +27,9 @@ public class Server : MonoBehaviour
     Socket conexion;
     IPEndPoint connect;
 
+
+    [SerializeField] GameObject fadeWaitingRoom;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +59,7 @@ public class Server : MonoBehaviour
 
         PlayerPrefs.SetString("LocalIP", ip);
         PlayerPrefs.SetString("RoomPassword", password);
-        SceneManager.LoadScene(4);
+        fadeWaitingRoom.SetActive(true);
     }
 
     void RecieveTcpClient()
@@ -65,13 +68,13 @@ public class Server : MonoBehaviour
         {
             conexion = listen.Accept();
             
-            byte[] recibir_info = new byte[1024];
+            byte[] recibirInfo = new byte[1024];
             string data = "";
-            int array_size = 0;
+            int arraySize = 0;
 
-            array_size = conexion.Receive(recibir_info, 0, recibir_info.Length, 0);
-            Array.Resize(ref recibir_info, array_size);
-            data = Encoding.Default.GetString(recibir_info);
+            arraySize = conexion.Receive(recibirInfo, 0, recibirInfo.Length, 0);
+            Array.Resize(ref recibirInfo, arraySize);
+            data = Encoding.Default.GetString(recibirInfo);
 
             if (data != password)
             {

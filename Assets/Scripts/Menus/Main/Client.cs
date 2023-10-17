@@ -18,10 +18,14 @@ public class Client : MonoBehaviour
     public InputField ipField;
     public InputField passwordField;
 
+    bool checkingJoin;
+
+    [SerializeField] GameObject fadeIn;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        checkingJoin = false;
     }
 
     // Update is called once per frame
@@ -32,17 +36,43 @@ public class Client : MonoBehaviour
 
     public void CreateTcpClient()
     {
+        if (checkingJoin) return;
+
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         connect = new IPEndPoint(IPAddress.Parse(ipField.text), 6000); //IP y port tienen que ser la misma que el server
         Debug.Log("Ip: " + ipField.text);
 
         listen.Connect(connect);
 
-        byte[] enviar_info = new byte[1200];
+        byte[] enviarInfo = new byte[1024];
         string sendData;
 
         sendData = passwordField.text;
-        enviar_info = Encoding.Default.GetBytes(sendData);
-        listen.Send(enviar_info);
+        enviarInfo = Encoding.Default.GetBytes(sendData);
+        listen.Send(enviarInfo);
+
+        StartCoroutine(JoinRoom());
+    }
+
+    public void CreateUdpClient()
+    {
+        
+    }
+
+    IEnumerator JoinRoom()
+    {
+        checkingJoin = true;
+        yield return new WaitForSeconds(0.3f);
+
+        if (listen.Connected)
+        {
+            Debug.Log("Joining Room...");
+            fadeIn.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Imposible to join.");
+            checkingJoin = false;
+        }
     }
 }
