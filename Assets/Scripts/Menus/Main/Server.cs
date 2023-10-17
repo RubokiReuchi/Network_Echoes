@@ -54,7 +54,7 @@ public class Server : MonoBehaviour
         Thread threadTcp = new Thread(RecieveTcpClient);
         threadTcp.Start();
 
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene(4);
     }
 
     void RecieveTcpClient()
