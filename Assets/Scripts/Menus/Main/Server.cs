@@ -67,7 +67,7 @@ public class Server : MonoBehaviour
 
         if (data != password)
         {
-            conexion.Close();
+            conexion.Shutdown(SocketShutdown.Both);
             Debug.Log("Conexión rechazada");
         }
         else Debug.Log("Conexión aceptada");
