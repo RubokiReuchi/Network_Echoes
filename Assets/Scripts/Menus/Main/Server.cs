@@ -7,9 +7,12 @@ using System.Threading;
 using UnityEngine.tvOS;
 using System;
 using System.Text;
+using System.Linq;
 
 public class Server : MonoBehaviour
 {
+    string ip;
+
     Socket newSocket;
     IPEndPoint ipep;
     EndPoint client;
@@ -22,7 +25,7 @@ public class Server : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ip = GetLocalIP();
     }
 
     // Update is called once per frame
@@ -34,7 +37,8 @@ public class Server : MonoBehaviour
     public void CreateTcpServer()
     {
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        connect = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
+        connect = new IPEndPoint(IPAddress.Parse(ip), 6000);
+        Debug.Log("Ip: " + ip);
 
         listen.Bind(connect);
         listen.Listen(10);
@@ -93,5 +97,10 @@ public class Server : MonoBehaviour
             newSocket.SendTo(data, data.Length, SocketFlags.None, client);
 
         }
+    }
+
+    public string GetLocalIP()
+    {
+        return Dns.GetHostEntry(Dns.GetHostName()).AddressList.First(f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
     }
 }
