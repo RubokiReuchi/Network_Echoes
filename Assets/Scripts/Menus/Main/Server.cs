@@ -65,7 +65,11 @@ public class Server : MonoBehaviour
         Array.Resize(ref recibir_info, array_size);
         data = Encoding.Default.GetString(recibir_info);
 
-        if (data != password) { conexion.Close(); Debug.Log("Conexión rechazada"); }
+        if (data != password)
+        {
+            conexion.Close();
+            Debug.Log("Conexión rechazada");
+        }
         else Debug.Log("Conexión aceptada");
     }
 
