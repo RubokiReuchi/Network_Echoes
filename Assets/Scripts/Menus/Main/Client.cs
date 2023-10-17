@@ -41,7 +41,7 @@ public class Client : MonoBehaviour
         byte[] enviar_info = new byte[1200];
         string sendData;
 
-        sendData = /*passwordField.text*/Dns.GetHostEntry(Dns.GetHostName()).AddressList.First(f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
+        sendData = passwordField.text;
         enviar_info = Encoding.Default.GetBytes(sendData);
         listen.Send(enviar_info);
     }
