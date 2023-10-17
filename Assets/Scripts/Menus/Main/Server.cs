@@ -15,6 +15,7 @@ public class Server : MonoBehaviour
     string ip;
     public InputField passwordField;
     string password;
+    bool canJoin;
 
     Socket newSocket;
     IPEndPoint ipep;
@@ -25,18 +26,17 @@ public class Server : MonoBehaviour
     Socket conexion;
     IPEndPoint connect;
 
-    string test = "null";
-
     // Start is called before the first frame update
     void Start()
     {
         ip = GetLocalIP();
+        canJoin = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (test != "null") Debug.Log(test);
+        
     }
 
     public void CreateTcpServer()
@@ -56,7 +56,7 @@ public class Server : MonoBehaviour
 
     void RecieveTcpClient()
     {
-        while (true)
+        while (canJoin)
         {
             conexion = listen.Accept();
             
@@ -68,14 +68,16 @@ public class Server : MonoBehaviour
             Array.Resize(ref recibir_info, array_size);
             data = Encoding.Default.GetString(recibir_info);
 
-            test = data;
-
-            //if (data != password)
-            //{
-            //    conexion.Shutdown(SocketShutdown.Both);
-            //    Debug.Log("Conexión rechazada");
-            //}
-            //else Debug.Log("Conexión aceptada");
+            if (data != password)
+            {
+                conexion.Shutdown(SocketShutdown.Both);
+                Debug.Log("Conexión rechazada");
+            }
+            else
+            {
+                Debug.Log("Conexión aceptada");
+                canJoin = false;
+            }
         }
     }
 
