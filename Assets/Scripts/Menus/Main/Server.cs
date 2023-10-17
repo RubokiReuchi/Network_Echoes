@@ -47,6 +47,7 @@ public class Server : MonoBehaviour
 
         listen.Bind(connect);
         listen.Listen(10);
+        conexion = listen.Accept();
 
         Thread threadTcp = new Thread(RecieveTcpClient);
         threadTcp.Start();
@@ -54,23 +55,23 @@ public class Server : MonoBehaviour
 
     void RecieveTcpClient()
     {
-        conexion = listen.Accept();
-        Debug.Log("Check Password");
-
-        byte[] recibir_info = new byte[1024];
-        string data = "";
-        int array_size = 0;
-
-        array_size = conexion.Receive(recibir_info, 0, recibir_info.Length, 0);
-        Array.Resize(ref recibir_info, array_size);
-        data = Encoding.Default.GetString(recibir_info);
-
-        if (data != password)
+        while (true)
         {
-            conexion.Shutdown(SocketShutdown.Send);
-            Debug.Log("Conexión rechazada");
+            byte[] recibir_info = new byte[1024];
+            string data = "";
+            int array_size = 0;
+
+            array_size = conexion.Receive(recibir_info, 0, recibir_info.Length, 0);
+            Array.Resize(ref recibir_info, array_size);
+            data = Encoding.Default.GetString(recibir_info);
+
+            if (data != password)
+            {
+                conexion.Shutdown(SocketShutdown.Send);
+                Debug.Log("Conexión rechazada");
+            }
+            else Debug.Log("Conexión aceptada");
         }
-        else Debug.Log("Conexión aceptada");
     }
 
     public void CreateUdpServer()
