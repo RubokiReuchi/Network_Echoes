@@ -49,6 +49,12 @@ public class Client : MonoBehaviour
         connect = new IPEndPoint(IPAddress.Parse(ipField.text), 6000); //IP y port tienen que ser la misma que el server
         Debug.Log("Ip: " + ipField.text);
 
+        Thread threadTcp = new Thread(ConnectWithServer);
+        threadTcp.Start();
+    }
+
+    void ConnectWithServer()
+    {
         listen.Connect(connect);
 
         byte[] enviarInfo = new byte[1200];

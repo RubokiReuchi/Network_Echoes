@@ -59,7 +59,7 @@ public class Server : MonoBehaviour
 
         PlayerPrefs.SetString("LocalIP", ip);
         PlayerPrefs.SetString("RoomPassword", password);
-        fadeWaitingRoom.SetActive(true);
+        //fadeWaitingRoom.SetActive(true);
     }
 
     void RecieveTcpClient()
