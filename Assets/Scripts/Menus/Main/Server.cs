@@ -54,6 +54,7 @@ public class Server : MonoBehaviour
         Thread threadTcp = new Thread(RecieveTcpClient);
         threadTcp.Start();
 
+        PlayerPrefs.SetString("LocalIP", ip);
         SceneManager.LoadScene(4);
     }
 
