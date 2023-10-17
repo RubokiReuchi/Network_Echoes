@@ -25,6 +25,8 @@ public class Server : MonoBehaviour
     Socket conexion;
     IPEndPoint connect;
 
+    string test = "null";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +36,7 @@ public class Server : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (test != "null") Debug.Log(test);
     }
 
     public void CreateTcpServer()
@@ -57,6 +59,7 @@ public class Server : MonoBehaviour
         while (true)
         {
             conexion = listen.Accept();
+            
             byte[] recibir_info = new byte[1024];
             string data = "";
             int array_size = 0;
@@ -65,12 +68,14 @@ public class Server : MonoBehaviour
             Array.Resize(ref recibir_info, array_size);
             data = Encoding.Default.GetString(recibir_info);
 
-            if (data != password)
-            {
-                conexion.Shutdown(SocketShutdown.Send);
-                Debug.Log("Conexión rechazada");
-            }
-            else Debug.Log("Conexión aceptada");
+            test = data;
+
+            //if (data != password)
+            //{
+            //    conexion.Shutdown(SocketShutdown.Both);
+            //    Debug.Log("Conexión rechazada");
+            //}
+            //else Debug.Log("Conexión aceptada");
         }
     }
 
@@ -105,7 +110,6 @@ public class Server : MonoBehaviour
             string welcome = "Welcome to my Patata server";
             data = Encoding.ASCII.GetBytes(welcome);
             newSocket.SendTo(data, data.Length, SocketFlags.None, client);
-
         }
     }
 
