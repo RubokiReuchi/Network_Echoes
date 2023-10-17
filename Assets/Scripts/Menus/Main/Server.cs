@@ -46,7 +46,7 @@ public class Server : MonoBehaviour
         Debug.Log("Ip: " + ip);
 
         listen.Bind(connect);
-        listen.Listen(10);
+        listen.Listen(1);
 
         Thread threadTcp = new Thread(RecieveTcpClient);
         threadTcp.Start();
