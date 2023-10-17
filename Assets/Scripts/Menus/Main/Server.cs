@@ -57,13 +57,6 @@ public class Server : MonoBehaviour
         conexion = listen.Accept();
         Debug.Log("Check Password");
 
-        byte[] enviar_info = new byte[1200];
-        string sendData;
-        sendData = password;
-
-        enviar_info = Encoding.Default.GetBytes(sendData);
-        listen.Send(enviar_info);
-
         byte[] recibir_info = new byte[1024];
         string data = "";
         int array_size = 0;
@@ -72,7 +65,7 @@ public class Server : MonoBehaviour
         Array.Resize(ref recibir_info, array_size);
         data = Encoding.Default.GetString(recibir_info);
 
-        if (data == "passwordIncorrect") { conexion.Close(); Debug.Log("Conexión rechazada"); }
+        if (data != password) { conexion.Close(); Debug.Log("Conexión rechazada"); }
         else Debug.Log("Conexión aceptada");
     }
 

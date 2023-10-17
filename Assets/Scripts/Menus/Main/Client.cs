@@ -37,19 +37,10 @@ public class Client : MonoBehaviour
 
         listen.Connect(connect);
 
-        byte[] recibir_info = new byte[1024];
-        string data = "";
-        int array_size = 0;
-
-        array_size = listen.Receive(recibir_info, 0, recibir_info.Length, 0);
-        Array.Resize(ref recibir_info, array_size);
-        data = Encoding.Default.GetString(recibir_info);
-
         byte[] enviar_info = new byte[1200];
         string sendData;
 
-        if (data == passwordField.text) { sendData = "passwordCorrect"; Debug.Log("Conexión aceptada"); }
-        else { sendData = "passwordIncorrect"; Debug.Log("Conexión aceptada"); }
+        sendData = passwordField.text;
 
         enviar_info = Encoding.Default.GetBytes(sendData);
         listen.Send(enviar_info);
