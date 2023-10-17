@@ -43,7 +43,7 @@ public class Client : MonoBehaviour
 
     public void CreateTcpClient()
     {
-        if (checkingJoin) return;
+        //if (checkingJoin) return;
 
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         connect = new IPEndPoint(IPAddress.Parse(ipField.text), 6000); //IP y port tienen que ser la misma que el server
@@ -51,14 +51,14 @@ public class Client : MonoBehaviour
 
         listen.Connect(connect);
 
-        byte[] enviarInfo = new byte[1024];
+        byte[] enviarInfo = new byte[1200];
         string sendData;
 
         sendData = passwordField.text;
         enviarInfo = Encoding.Default.GetBytes(sendData);
         listen.Send(enviarInfo);
 
-        StartCoroutine(JoinRoom());
+        //StartCoroutine(JoinRoom());
     }
 
     public void CreateUdpClient()
