@@ -55,6 +55,7 @@ public class Server : MonoBehaviour
         threadTcp.Start();
 
         PlayerPrefs.SetString("LocalIP", ip);
+        PlayerPrefs.SetString("RoomPassword", password);
         SceneManager.LoadScene(4);
     }
 

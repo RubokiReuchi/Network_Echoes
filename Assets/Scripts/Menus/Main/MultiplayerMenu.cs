@@ -18,9 +18,16 @@ public class MultiplayerMenu : MonoBehaviour
     public GameObject joinMenu;
     public GameObject createPasswordInput;
     public GameObject joinHostInput;
-    public GameObject createButton;
 
+    public GameObject createButton;
     bool workingOnRoom;
+
+    // UDP
+    public GameObject createMenuUDP;
+    public GameObject joinMenuUDP;
+    public GameObject createPasswordInputUDP;
+    public GameObject joinHostInputUDP;
+
     [SerializeField] AudioSource accept;
 
 
