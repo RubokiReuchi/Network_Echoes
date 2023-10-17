@@ -7,11 +7,14 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System;
+using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
     Socket listen;
     IPEndPoint connect;
+
+    public InputField ip;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +31,8 @@ public class Client : MonoBehaviour
     public void CreateTcpClient()
     {
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        connect = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000); //IP y port tienen que ser la misma que el server
+        connect = new IPEndPoint(IPAddress.Parse(ip.text), 6000); //IP y port tienen que ser la misma que el server
+        Debug.Log("Ip: " + ip.text);
 
         listen.Connect(connect);
 
