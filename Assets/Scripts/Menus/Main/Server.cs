@@ -47,7 +47,6 @@ public class Server : MonoBehaviour
 
         listen.Bind(connect);
         listen.Listen(10);
-        conexion = listen.Accept();
 
         Thread threadTcp = new Thread(RecieveTcpClient);
         threadTcp.Start();
@@ -57,6 +56,7 @@ public class Server : MonoBehaviour
     {
         while (true)
         {
+            conexion = listen.Accept();
             byte[] recibir_info = new byte[1024];
             string data = "";
             int array_size = 0;
