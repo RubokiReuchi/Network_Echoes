@@ -19,9 +19,12 @@ public class Client : MonoBehaviour
     public InputField ipField;
     public InputField passwordField;
 
+    public InputField UdpIpField;
+    public InputField UdpPasswordField;
+
     bool checkingJoin;
 
-    [SerializeField] GameObject fadeIn;
+    //[SerializeField] GameObject fadeIn;
 
     //UDP
     Socket listenUdp;
@@ -63,25 +66,27 @@ public class Client : MonoBehaviour
         sendData = passwordField.text;
         enviarInfo = Encoding.Default.GetBytes(sendData);
         listen.Send(enviarInfo);
-        
+
+
+        Debug.Log("Joining Room...");
         //StartCoroutine(JoinRoom());
     }
 
     public void CreateUdpClient()
     {
-        
 
-        endPoint = new IPEndPoint(IPAddress.Parse("10.0.103.47"), 6000);
+       
+        endPoint = new IPEndPoint(IPAddress.Parse(UdpIpField.text), 6000);
 
         listenUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        Debug.Log("Ip: " + ipField.text);
+        Debug.Log("Ip: " + UdpIpField.text);
 
-        
+
 
         Thread threadUdp = new Thread(ConnectWithUdpServer);
         threadUdp.Start();
 
-        
+        Debug.Log("Joining Room...");
 
         //StartCoroutine(JoinRoom());
 
@@ -109,7 +114,7 @@ public class Client : MonoBehaviour
         if (listen.Connected)
         {
             Debug.Log("Joining Room...");
-            fadeIn.SetActive(true);
+            //fadeIn.SetActive(true);
         }
         else
         {
