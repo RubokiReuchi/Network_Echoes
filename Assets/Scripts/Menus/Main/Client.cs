@@ -26,8 +26,8 @@ public class Client : MonoBehaviour
     //UDP
     Socket listenUdp;
     IPEndPoint endPoint;
+    byte[] data = new byte[1024];
 
-    
 
     // Start is called before the first frame update
     void Start()
@@ -63,41 +63,43 @@ public class Client : MonoBehaviour
         sendData = passwordField.text;
         enviarInfo = Encoding.Default.GetBytes(sendData);
         listen.Send(enviarInfo);
-
+        
         //StartCoroutine(JoinRoom());
     }
 
     public void CreateUdpClient()
     {
         
-        endPoint = new IPEndPoint(IPAddress.Parse(ipField.text), 6000);
+
+        endPoint = new IPEndPoint(IPAddress.Parse("10.0.103.47"), 6000);
 
         listenUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         Debug.Log("Ip: " + ipField.text);
 
-        //Esto va aqui???
-        //listen.Connect(connect);
+        
 
+        Thread threadUdp = new Thread(ConnectWithUdpServer);
+        threadUdp.Start();
 
-        byte[] data = new byte[1024];
+        
+
+        //StartCoroutine(JoinRoom());
+
+    }
+    void ConnectWithUdpServer()
+    {
+        IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+        EndPoint Remote = (EndPoint)sender;
+
+        Debug.Log("Conected");
         string input, stringData;
         string welcome = "Hello, are you there?";
         data = Encoding.ASCII.GetBytes(welcome);
         listenUdp.SendTo(data, data.Length, SocketFlags.None, endPoint);
-
-        IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-        EndPoint Remote = (EndPoint)sender;
-
-        data = new byte[1024];
         int recv = listenUdp.ReceiveFrom(data, ref Remote);
-
-        //Console.WriteLine("Message received from {0}:", Remote.ToString());
-        //Console.WriteLine(Encoding.ASCII.GetString(data, 0, recv));
-
-        StartCoroutine(JoinRoom());
-
+        Console.WriteLine("Message received from {0}:", Remote.ToString());
+        Console.WriteLine(Encoding.ASCII.GetString(data, 0, recv));
     }
-
 
     IEnumerator JoinRoom()
     {

@@ -95,13 +95,9 @@ public class Server : MonoBehaviour
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         ipep = new IPEndPoint(IPAddress.Any, 8000);
         newSocket.Bind(ipep);
-       
-        Console.WriteLine("Waiting for a client...");
+        
 
-
-        IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-        client = (EndPoint)(sender);
-        //client = (EndPoint)sender;
+        Debug.Log("Waiting for a client...");
 
         Thread thread = new Thread(RecieveUdpClient);
 
@@ -112,12 +108,19 @@ public class Server : MonoBehaviour
     {
         while (true)
         {
+
+            IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+            client = (EndPoint)(sender);
+            //client = (EndPoint)sender;
+
             byte[] data = new byte[2048];
             int recv = newSocket.ReceiveFrom(data, ref client);
-            Console.WriteLine("Message received from {0}:");
+            Debug.Log("Message received from {0}:");
             Console.WriteLine(Encoding.ASCII.GetString(data, 0, recv));
 
+
             string welcome = "Welcome to my Patata server";
+           
             data = Encoding.ASCII.GetBytes(welcome);
             newSocket.SendTo(data, data.Length, SocketFlags.None, client);
         }
