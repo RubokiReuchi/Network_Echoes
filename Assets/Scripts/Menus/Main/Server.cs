@@ -112,7 +112,7 @@ public class Server : MonoBehaviour
     {
         while (canJoin)
         {
-            IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 8000);
             client = (EndPoint)(endPoint);
 
             byte[] info = new byte[2048];
