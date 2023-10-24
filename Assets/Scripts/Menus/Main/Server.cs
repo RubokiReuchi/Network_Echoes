@@ -18,14 +18,15 @@ public class Server : MonoBehaviour
     string password;
     bool canJoin;
 
-    Socket newSocket;
-    IPEndPoint ipep;
+    // UDP
+    Socket listen;
+    IPEndPoint connect;
     EndPoint client;
 
     //Tcp
-    Socket listen;
-    Socket conexion;
-    IPEndPoint connect;
+    //Socket listenTCP;
+    //Socket conexionTCP;
+    //IPEndPoint connectTCP;
 
 
     [SerializeField] GameObject fadeWaitingRoom;
@@ -43,42 +44,86 @@ public class Server : MonoBehaviour
         
     }
 
-    public void CreateTcpServer()
+    //public void CreateTcpServer()
+    //{
+    //    password = passwordField.text;
+
+    //    listenTCP = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+    //    connectTCP = new IPEndPoint(IPAddress.Parse(ip), 6000);
+    //    Debug.Log("Ip: " + ip);
+
+    //    listenTCP.Bind(connectTCP);
+    //    listenTCP.Listen(1);
+
+    //    Thread threadTcp = new Thread(RecieveTcpClient);
+    //    threadTcp.Start();
+
+    //    PlayerPrefs.SetString("LocalIP", ip);
+    //    PlayerPrefs.SetString("RoomPassword", password);
+    //    fadeWaitingRoom.SetActive(true);
+    //}
+
+    //void RecieveTcpClient()
+    //{
+    //    while (canJoin)
+    //    {
+    //        conexionTCP = listenTCP.Accept();
+            
+    //        byte[] recibirInfo = new byte[1024];
+    //        string data = "";
+    //        int arraySize = 0;
+
+    //        arraySize = conexionTCP.Receive(recibirInfo, 0, recibirInfo.Length, 0);
+    //        Array.Resize(ref recibirInfo, arraySize);
+    //        data = Encoding.Default.GetString(recibirInfo);
+
+    //        if (data != password)
+    //        {
+    //            conexionTCP.Shutdown(SocketShutdown.Both);
+    //            Debug.Log("Conexión rechazada");
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Conexión aceptada");
+    //            canJoin = false;
+    //        }
+    //    }
+    //}
+
+    public void CreateUdpServer()
     {
+        // UDP
         password = passwordField.text;
 
-        listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        connect = new IPEndPoint(IPAddress.Parse(ip), 6000);
-        Debug.Log("Ip: " + ip);
+        listen = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        connect = new IPEndPoint(IPAddress.Any, 8000);
 
         listen.Bind(connect);
         listen.Listen(1);
 
-        Thread threadTcp = new Thread(RecieveTcpClient);
-        threadTcp.Start();
+        Thread thread = new Thread(RecieveUdpClient);
+        thread.Start();
 
         PlayerPrefs.SetString("LocalIP", ip);
         PlayerPrefs.SetString("RoomPassword", password);
         fadeWaitingRoom.SetActive(true);
     }
 
-    void RecieveTcpClient()
+    void RecieveUdpClient()
     {
         while (canJoin)
         {
-            conexion = listen.Accept();
-            
-            byte[] recibirInfo = new byte[1024];
-            string data = "";
-            int arraySize = 0;
+            IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+            client = (EndPoint)(sender);
 
-            arraySize = conexion.Receive(recibirInfo, 0, recibirInfo.Length, 0);
-            Array.Resize(ref recibirInfo, arraySize);
-            data = Encoding.Default.GetString(recibirInfo);
+            byte[] size = new byte[2048];
+            string data = "";
+            int recv = listen.ReceiveFrom(size, ref client);
+            data = Encoding.ASCII.GetString(size, 0, recv);
 
             if (data != password)
             {
-                conexion.Shutdown(SocketShutdown.Both);
+                listen.Shutdown(SocketShutdown.Both);
                 Debug.Log("Conexión rechazada");
             }
             else
@@ -86,43 +131,6 @@ public class Server : MonoBehaviour
                 Debug.Log("Conexión aceptada");
                 canJoin = false;
             }
-        }
-    }
-
-    public void CreateUdpServer()
-    {
-        // UDP
-        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        ipep = new IPEndPoint(IPAddress.Any, 8000);
-        newSocket.Bind(ipep);
-        
-
-        Debug.Log("Waiting for a client...");
-
-        Thread thread = new Thread(RecieveUdpClient);
-
-        thread.Start();
-    }
-
-    void RecieveUdpClient()
-    {
-        while (true)
-        {
-
-            IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-            client = (EndPoint)(sender);
-            //client = (EndPoint)sender;
-
-            byte[] data = new byte[2048];
-            int recv = newSocket.ReceiveFrom(data, ref client);
-            Debug.Log("Message received from {0}:");
-            Console.WriteLine(Encoding.ASCII.GetString(data, 0, recv));
-
-
-            string welcome = "Welcome to my Patata server";
-           
-            data = Encoding.ASCII.GetBytes(welcome);
-            newSocket.SendTo(data, data.Length, SocketFlags.None, client);
         }
     }
 

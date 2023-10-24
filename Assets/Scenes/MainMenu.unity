@@ -540,12 +540,12 @@ GameObject:
   - component: {fileID: 34165130}
   - component: {fileID: 34165131}
   m_Layer: 5
-  m_Name: ServerOptionUDP
+  m_Name: ServerOptionTCP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &34165130
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9562,7 +9562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &677102388
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9604,15 +9604,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1116838079}
+  createButton: {fileID: 178478541}
   createMenu: {fileID: 726049398}
   joinMenu: {fileID: 1095776403}
   createPasswordInput: {fileID: 1197143145}
   joinHostInput: {fileID: 2027839602}
-  createButton: {fileID: 178478541}
-  createMenuUDP: {fileID: 688214366}
-  joinMenuUDP: {fileID: 243723230}
-  createPasswordInputUDP: {fileID: 55838595}
-  joinHostInputUDP: {fileID: 378724702}
   accept: {fileID: 283325414}
 --- !u!1 &688214366
 GameObject:
@@ -11095,7 +11091,6 @@ MonoBehaviour:
   passwordField: {fileID: 1560180808}
   UdpIpField: {fileID: 378724704}
   UdpPasswordField: {fileID: 0}
-  fadeIn: {fileID: 0}
 --- !u!1 &811658983
 GameObject:
   m_ObjectHideFlags: 0
@@ -13474,7 +13469,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 800932552}
         m_TargetAssemblyTypeName: Client, Assembly-CSharp
-        m_MethodName: CreateTcpClient
+        m_MethodName: CreateUdpClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18170,12 +18165,12 @@ GameObject:
   - component: {fileID: 1340839444}
   - component: {fileID: 1340839445}
   m_Layer: 5
-  m_Name: ServerData UDP
+  m_Name: ServerData TCP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1340839444
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18358,7 +18353,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 800932550}
         m_TargetAssemblyTypeName: Server, Assembly-CSharp
-        m_MethodName: CreateTcpServer
+        m_MethodName: CreateUdpServer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25049,7 +25044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1874692229
 RectTransform:
   m_ObjectHideFlags: 0

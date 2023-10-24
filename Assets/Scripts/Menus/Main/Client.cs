@@ -12,24 +12,22 @@ using System.Linq;
 
 public class Client : MonoBehaviour
 {
-    //TCP
     Socket listen;
-    IPEndPoint connect;
+    IPEndPoint endPoint;
 
     public InputField ipField;
     public InputField passwordField;
 
-    public InputField UdpIpField;
-    public InputField UdpPasswordField;
+
+    //Socket listenTCP;
+    //IPEndPoint connectTCP;
+
+    //public InputField ipFieldTCP;
+    //public InputField passwordFieldTCP;
 
     bool checkingJoin;
 
     //[SerializeField] GameObject fadeIn;
-
-    //UDP
-    Socket listenUdp;
-    IPEndPoint endPoint;
-    byte[] data = new byte[1024];
 
 
     // Start is called before the first frame update
@@ -44,66 +42,54 @@ public class Client : MonoBehaviour
         
     }
 
-    public void CreateTcpClient()
-    {
-        //if (checkingJoin) return;
+    //public void CreateTcpClient()
+    //{
+    //    if (checkingJoin) return;
 
-        listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        connect = new IPEndPoint(IPAddress.Parse(ipField.text), 6000); //IP y port tienen que ser la misma que el server
-        Debug.Log("Ip: " + ipField.text);
+    //    listen = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+    //    connect = new IPEndPoint(IPAddress.Parse(ipField.text), 6000); //IP y port tienen que ser la misma que el server
+    //    Debug.Log("Ip: " + ipField.text);
 
-        Thread threadTcp = new Thread(ConnectWithServer);
-        threadTcp.Start();
-    }
+    //    Thread threadTcp = new Thread(ConnectWithServer);
+    //    threadTcp.Start();
+    //}
 
-    void ConnectWithServer()
-    {
-        listen.Connect(connect);
+    //void ConnectWithServer()
+    //{
+    //    listen.Connect(connect);
 
-        byte[] enviarInfo = new byte[1200];
-        string sendData;
+    //    byte[] enviarInfo = new byte[1200];
+    //    string sendData;
 
-        sendData = passwordField.text;
-        enviarInfo = Encoding.Default.GetBytes(sendData);
-        listen.Send(enviarInfo);
+    //    sendData = passwordField.text;
+    //    enviarInfo = Encoding.Default.GetBytes(sendData);
+    //    listen.Send(enviarInfo);
 
 
-        Debug.Log("Joining Room...");
-        //StartCoroutine(JoinRoom());
-    }
+    //    Debug.Log("Joining Room...");
+    //    StartCoroutine(JoinRoom());
+    //}
 
     public void CreateUdpClient()
     {
+        if (checkingJoin) return;
 
-       
-        endPoint = new IPEndPoint(IPAddress.Parse(UdpIpField.text), 6000);
-
-        listenUdp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        Debug.Log("Ip: " + UdpIpField.text);
-
-
+        listen = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        endPoint = new IPEndPoint(IPAddress.Parse(ipField.text), 8000);
+        Debug.Log("Ip: " + ipField.text);
 
         Thread threadUdp = new Thread(ConnectWithUdpServer);
         threadUdp.Start();
-
-        Debug.Log("Joining Room...");
-
-        //StartCoroutine(JoinRoom());
-
     }
     void ConnectWithUdpServer()
     {
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         EndPoint Remote = (EndPoint)sender;
 
-        Debug.Log("Conected");
-        string input, stringData;
-        string welcome = "Hello, are you there?";
-        data = Encoding.ASCII.GetBytes(welcome);
-        listenUdp.SendTo(data, data.Length, SocketFlags.None, endPoint);
-        int recv = listenUdp.ReceiveFrom(data, ref Remote);
-        Console.WriteLine("Message received from {0}:", Remote.ToString());
-        Console.WriteLine(Encoding.ASCII.GetString(data, 0, recv));
+        byte[] size = new byte[1024];
+        string data = passwordField.text;
+        size = Encoding.ASCII.GetBytes(data);
+        listen.SendTo(size, size.Length, SocketFlags.None, endPoint);
     }
 
     IEnumerator JoinRoom()

@@ -14,19 +14,18 @@ public class MultiplayerMenu : MonoBehaviour
 {
     [SerializeField] InitialScreenManager manager;
 
+    public GameObject createButton;
+    bool workingOnRoom;
+
     public GameObject createMenu;
     public GameObject joinMenu;
     public GameObject createPasswordInput;
     public GameObject joinHostInput;
 
-    public GameObject createButton;
-    bool workingOnRoom;
-
-    // UDP
-    public GameObject createMenuUDP;
-    public GameObject joinMenuUDP;
-    public GameObject createPasswordInputUDP;
-    public GameObject joinHostInputUDP;
+    //public GameObject createMenuTCP;
+    //public GameObject joinMenuTCP;
+    //public GameObject createPasswordInputTCP;
+    //public GameObject joinHostInputTCP;
 
     [SerializeField] AudioSource accept;
 
@@ -51,15 +50,12 @@ public class MultiplayerMenu : MonoBehaviour
             {
                 createMenu.SetActive(false);
                 joinMenu.SetActive(false);
+                //createMenuTCP.SetActive(false);
+                //joinMenuTCP.SetActive(false);
                 EventSystem.current.SetSelectedGameObject(createButton);
-
-                // UDP
-                createMenuUDP.SetActive(false);
-                joinMenuUDP.SetActive(false);
             }
         }
     }
-
     public void CreateRoom()
     {
         createMenu.SetActive(true);
@@ -74,19 +70,17 @@ public class MultiplayerMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(joinHostInput);
     }
 
+    //public void CreateRoomTCP()
+    //{
+    //    createMenuTCP.SetActive(true);
+    //    workingOnRoom = true;
+    //    EventSystem.current.SetSelectedGameObject(createPasswordInputTCP);
+    //}
 
-    // UDP
-    public void CreateRoomUDP()
-    {
-        createMenuUDP.SetActive(true);
-        workingOnRoom = true;
-        EventSystem.current.SetSelectedGameObject(createPasswordInputUDP);
-    }
-
-    public void JoinRoomUDP()
-    {
-        joinMenuUDP.SetActive(true);
-        workingOnRoom = true;
-        EventSystem.current.SetSelectedGameObject(joinHostInputUDP);
-    }
+    //public void JoinRoomTCP()
+    //{
+    //    joinMenuTCP.SetActive(true);
+    //    workingOnRoom = true;
+    //    EventSystem.current.SetSelectedGameObject(joinHostInputTCP);
+    //}
 }

@@ -32,6 +32,7 @@ public class WaitingRoom : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
+            // break conection
             SceneManager.LoadScene(1);
         }
     }
