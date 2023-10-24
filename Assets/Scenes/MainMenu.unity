@@ -11089,8 +11089,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ipField: {fileID: 2027839606}
   passwordField: {fileID: 1560180808}
-  UdpIpField: {fileID: 378724704}
-  UdpPasswordField: {fileID: 0}
 --- !u!1 &811658983
 GameObject:
   m_ObjectHideFlags: 0
