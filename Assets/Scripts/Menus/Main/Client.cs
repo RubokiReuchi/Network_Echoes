@@ -91,9 +91,12 @@ public class Client : MonoBehaviour
         info = Encoding.ASCII.GetBytes(data);
         listen.SendTo(info, info.Length, SocketFlags.None, endPoint);
 
-        int recv = listen.ReceiveFrom(info, ref server);
-        data = Encoding.ASCII.GetString(info, 0, recv);
-        Debug.Log(data);
+        while (true)
+        {
+            int recv = listen.ReceiveFrom(info, ref server);
+            data = Encoding.ASCII.GetString(info, 0, recv);
+            Debug.Log(data);
+        }
     }
 
     IEnumerator JoinRoom()
