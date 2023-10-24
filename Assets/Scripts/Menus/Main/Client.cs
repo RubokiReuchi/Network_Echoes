@@ -9,6 +9,7 @@ using System.Threading;
 using System;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEditor.PackageManager;
 
 public class Client : MonoBehaviour
 {
@@ -83,12 +84,16 @@ public class Client : MonoBehaviour
     void ConnectWithUdpServer()
     {
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-        EndPoint Remote = (EndPoint)sender;
+        EndPoint server = (EndPoint)sender;
 
-        byte[] size = new byte[1024];
+        byte[] info = new byte[2048];
         string data = passwordField.text;
-        size = Encoding.ASCII.GetBytes(data);
-        listen.SendTo(size, size.Length, SocketFlags.None, endPoint);
+        info = Encoding.ASCII.GetBytes(data);
+        listen.SendTo(info, info.Length, SocketFlags.None, endPoint);
+
+        int recv = listen.ReceiveFrom(info, ref server);
+        data = Encoding.ASCII.GetString(info, 0, recv);
+        Debug.Log(data);
     }
 
     IEnumerator JoinRoom()

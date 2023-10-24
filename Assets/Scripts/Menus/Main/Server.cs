@@ -112,18 +112,20 @@ public class Server : MonoBehaviour
     {
         while (canJoin)
         {
-            IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-            client = (EndPoint)(sender);
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
+            client = (EndPoint)(endPoint);
 
-            byte[] size = new byte[2048];
+            byte[] info = new byte[2048];
             string data = "";
-            int recv = listen.ReceiveFrom(size, ref client);
-            data = Encoding.ASCII.GetString(size, 0, recv);
+            int recv = listen.ReceiveFrom(info, ref client);
+            data = Encoding.ASCII.GetString(info, 0, recv);
 
             if (data != password)
             {
-                listen.Shutdown(SocketShutdown.Both);
                 Debug.Log("Conexión rechazada");
+                data = "Wrong Password";
+                info = Encoding.ASCII.GetBytes(data);
+                listen.SendTo(info, info.Length, SocketFlags.None, endPoint);
             }
             else
             {
