@@ -91,13 +91,19 @@ public class Client : MonoBehaviour
         sendInfo = Encoding.ASCII.GetBytes(data);
         listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
 
-        while (true)
+        bool exit = false;
+        while (!exit)
         {
             byte[] recieveInfo = new byte[1024];
             int recv = listen.ReceiveFrom(recieveInfo, ref server);
             data = Encoding.ASCII.GetString(recieveInfo, 0, recv);
-            Debug.Log(data);
+
+            if (data == "Wrong Password") return;
+            else if (data == "Correct Password") exit = true;
+            else Debug.LogError("Logic Error");
         }
+
+        // loop
     }
 
     IEnumerator JoinRoom()

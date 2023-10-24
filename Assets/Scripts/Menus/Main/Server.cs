@@ -123,16 +123,19 @@ public class Server : MonoBehaviour
             if (data != password)
             {
                 Debug.Log("Conexión rechazada");
-                byte[] sendInfo = new byte[1024];
                 data = "Wrong Password";
-                sendInfo = Encoding.ASCII.GetBytes(data);
-                listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, client);
             }
             else
             {
                 Debug.Log("Conexión aceptada");
+                data = "Correct Password";
                 canJoin = false;
             }
+            byte[] sendInfo = new byte[1024];
+            sendInfo = Encoding.ASCII.GetBytes(data);
+            listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, client);
+
+            // loop
         }
     }
 
