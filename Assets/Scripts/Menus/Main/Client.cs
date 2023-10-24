@@ -86,15 +86,16 @@ public class Client : MonoBehaviour
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
         EndPoint server = (EndPoint)sender;
 
-        byte[] info = new byte[2048];
+        byte[] sendInfo = new byte[2048];
         string data = passwordField.text;
-        info = Encoding.ASCII.GetBytes(data);
-        listen.SendTo(info, info.Length, SocketFlags.None, endPoint);
+        sendInfo = Encoding.ASCII.GetBytes(data);
+        listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
 
         while (true)
         {
-            int recv = listen.ReceiveFrom(info, ref server);
-            data = Encoding.ASCII.GetString(info, 0, recv);
+            byte[] recieveInfo = new byte[1024];
+            int recv = listen.ReceiveFrom(recieveInfo, ref server);
+            data = Encoding.ASCII.GetString(recieveInfo, 0, recv);
             Debug.Log(data);
         }
     }
