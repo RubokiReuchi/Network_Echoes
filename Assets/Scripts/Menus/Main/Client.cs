@@ -18,7 +18,6 @@ public class Client : MonoBehaviour
     public InputField ipField;
     public InputField passwordField;
 
-
     //Socket listenTCP;
     //IPEndPoint connectTCP;
 

@@ -99,7 +99,6 @@ public class Server : MonoBehaviour
         connect = new IPEndPoint(IPAddress.Any, 8000);
 
         listen.Bind(connect);
-        listen.Listen(1);
 
         Thread thread = new Thread(RecieveUdpClient);
         thread.Start();
