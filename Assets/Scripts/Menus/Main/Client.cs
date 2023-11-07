@@ -27,6 +27,7 @@ public class Client : MonoBehaviour
     //public InputField passwordFieldTCP;
 
     [SerializeField] GameObject fadeWaitingRoom;
+    bool goToWaittingRoom = false;
 
     //[SerializeField] GameObject fadeIn;
 
@@ -40,7 +41,12 @@ public class Client : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (goToWaittingRoom)
+        {
+            goToWaittingRoom = false;
+            DontDestroyOnLoad(gameObject);
+            fadeWaitingRoom.SetActive(true);
+        }
     }
 
     //public void CreateTcpClient()
@@ -79,6 +85,7 @@ public class Client : MonoBehaviour
 
         Thread threadUdp = new Thread(ConnectWithUdpServer);
         threadUdp.Start();
+
     }
     void ConnectWithUdpServer()
     {
@@ -102,9 +109,8 @@ public class Client : MonoBehaviour
             else if (data == "Correct Password") exit = true;
             else Debug.LogError("Logic Error");
         }
+        goToWaittingRoom = true;
 
-        DontDestroyOnLoad(gameObject);
-        fadeWaitingRoom.SetActive(true);
         // waitingRoom
         while (SceneManager.GetActiveScene().buildIndex != 4)
         {
