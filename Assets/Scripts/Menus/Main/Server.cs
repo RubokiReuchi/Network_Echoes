@@ -23,6 +23,8 @@ public class Server : MonoBehaviour
     IPEndPoint connect;
     EndPoint client;
 
+    bool goToGame = false;
+
     //Tcp
     //Socket listenTCP;
     //Socket conexionTCP;
@@ -41,7 +43,11 @@ public class Server : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (goToGame)
+        {
+            goToGame = false;
+            SceneManager.LoadScene(3);
+        }
     }
 
     //public void CreateTcpServer()
@@ -146,7 +152,7 @@ public class Server : MonoBehaviour
                 {
                     sendInfo = Encoding.ASCII.GetBytes(data);
                     listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, client);
-                    SceneManager.LoadScene(3);
+                    goToGame = true;
                     exit = true;
                 }
             }
