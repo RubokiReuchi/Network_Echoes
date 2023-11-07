@@ -27,7 +27,10 @@ public class Client : MonoBehaviour
     //public InputField passwordFieldTCP;
 
     [SerializeField] GameObject fadeWaitingRoom;
-    bool goToWaittingRoom = false;
+    bool goToWaitingRoom = false;
+    int activeSceneIndex = 0;
+    bool goToGame = false;
+    float waitSecs = 0;
 
     //[SerializeField] GameObject fadeIn;
 
@@ -41,12 +44,24 @@ public class Client : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (goToWaittingRoom)
+        if (goToWaitingRoom)
         {
-            goToWaittingRoom = false;
+            goToWaitingRoom = false;
             DontDestroyOnLoad(gameObject);
             fadeWaitingRoom.SetActive(true);
         }
+        else if (goToGame)
+        {
+            goToGame = false;
+            SceneManager.LoadScene(3);
+        }
+
+        if (waitSecs > 0)
+        {
+            waitSecs -= Time.deltaTime;
+        }
+
+        activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     //public void CreateTcpClient()
@@ -109,13 +124,12 @@ public class Client : MonoBehaviour
             else if (data == "Correct Password") exit = true;
             else Debug.LogError("Logic Error");
         }
-        goToWaittingRoom = true;
+        goToWaitingRoom = true;
 
         // waitingRoom
-        while (SceneManager.GetActiveScene().buildIndex != 4)
-        {
-            // wait
-        }
+        while (activeSceneIndex != 4) { }
+        waitSecs = 3.0f;
+        while (waitSecs > 0) { }
         data = "OnWaitingRoom";
         sendInfo = Encoding.ASCII.GetBytes(data);
         listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
@@ -126,8 +140,10 @@ public class Client : MonoBehaviour
             data = Encoding.ASCII.GetString(recieveInfo, 0, recv);
             if (data == "OnWaitingRoom") exit = true;
         }
-        SceneManager.LoadScene(3);
+        goToGame = true;
     }
+
+    void 
 
     //IEnumerator JoinRoom()
     //{
