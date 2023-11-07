@@ -9661,7 +9661,7 @@ GameObject:
   - component: {fileID: 709818894}
   m_Layer: 0
   m_Name: Client
-  m_TagString: Untagged
+  m_TagString: Client
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9681,6 +9681,7 @@ MonoBehaviour:
   ipField: {fileID: 2027839606}
   passwordField: {fileID: 1560180808}
   fadeWaitingRoom: {fileID: 1821776832}
+  waitSecs: 0
 --- !u!4 &709818895
 Transform:
   m_ObjectHideFlags: 0
@@ -11087,7 +11088,7 @@ GameObject:
   - component: {fileID: 800932550}
   m_Layer: 0
   m_Name: Server
-  m_TagString: Untagged
+  m_TagString: Server
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

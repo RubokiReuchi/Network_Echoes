@@ -30,7 +30,7 @@ public class Client : MonoBehaviour
     bool goToWaitingRoom = false;
     int activeSceneIndex = 0;
     bool goToGame = false;
-    float waitSecs = 0;
+    public float waitSecs = 0;
 
     //[SerializeField] GameObject fadeIn;
 
@@ -141,6 +141,8 @@ public class Client : MonoBehaviour
             if (data == "OnWaitingRoom") exit = true;
         }
         goToGame = true;
+
+        // in game
     }
 
     //IEnumerator JoinRoom()
