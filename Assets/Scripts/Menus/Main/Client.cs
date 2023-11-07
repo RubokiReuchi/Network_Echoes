@@ -143,8 +143,6 @@ public class Client : MonoBehaviour
         goToGame = true;
     }
 
-    void 
-
     //IEnumerator JoinRoom()
     //{
     //    checkingJoin = true;
