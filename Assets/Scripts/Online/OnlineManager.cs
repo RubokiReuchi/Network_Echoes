@@ -7,8 +7,8 @@ public class OnlineManager : MonoBehaviour
 {
     static public OnlineManager onlineManager;
 
-    [SerializeField] PlayerInput boyInput;
-    [SerializeField] PlayerInput girlInput;
+    [SerializeField] PlayerController boyController;
+    [SerializeField] PlayerController girlontroller;
     private void Awake()
     {
         onlineManager = this; // revisar
@@ -17,8 +17,8 @@ public class OnlineManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameObject.FindGameObjectWithTag("Server")) girlInput.enabled = false;
-        else boyInput.enabled = false;
+        if (GameObject.FindGameObjectWithTag("Server")) girlontroller.enabled = false;
+        else boyController.enabled = false;
     }
 
     // Update is called once per frame
