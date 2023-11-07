@@ -158,8 +158,24 @@ public class Server : MonoBehaviour
             }
 
             // in game
-
+            while (true)
+            {
+                Thread threadSend = new Thread(SendInfo);
+                threadSend.Start();
+                Thread threadRecieve = new Thread(RecieveInfo);
+                threadRecieve.Start();
+            }
         }
+    }
+
+    void SendInfo()
+    {
+
+    }
+
+    void RecieveInfo()
+    {
+
     }
 
     public string GetLocalIP()

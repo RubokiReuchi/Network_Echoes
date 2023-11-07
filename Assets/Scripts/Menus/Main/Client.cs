@@ -145,8 +145,10 @@ public class Client : MonoBehaviour
         // in game
         while (true)
         {
-            SendInfo();
-            RecieveInfo();
+            Thread threadSend = new Thread(SendInfo);
+            threadSend.Start();
+            Thread threadRecieve = new Thread(RecieveInfo);
+            threadRecieve.Start();
         }
     }
 
