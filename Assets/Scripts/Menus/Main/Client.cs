@@ -128,7 +128,7 @@ public class Client : MonoBehaviour
 
         // waitingRoom
         while (activeSceneIndex != 4) { }
-        waitSecs = 3.0f;
+        waitSecs = 2.0f;
         while (waitSecs > 0) { }
         data = "OnWaitingRoom";
         sendInfo = Encoding.ASCII.GetBytes(data);
