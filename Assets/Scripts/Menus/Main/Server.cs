@@ -105,6 +105,7 @@ public class Server : MonoBehaviour
 
         PlayerPrefs.SetString("LocalIP", ip);
         PlayerPrefs.SetString("RoomPassword", password);
+        DontDestroyOnLoad(gameObject);
         fadeWaitingRoom.SetActive(true);
     }
 
@@ -135,7 +136,20 @@ public class Server : MonoBehaviour
             sendInfo = Encoding.ASCII.GetBytes(data);
             listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, client);
 
-            // loop
+            // waitingRoom
+            bool exit = false;
+            while (!exit)
+            {
+                recv = listen.ReceiveFrom(reciveInfo, ref client);
+                data = Encoding.ASCII.GetString(reciveInfo, 0, recv);
+                if (data == "OnWaitingRoom")
+                {
+                    sendInfo = Encoding.ASCII.GetBytes(data);
+                    listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, client);
+                    SceneManager.LoadScene(3);
+                    exit = true;
+                }
+            }
         }
     }
 

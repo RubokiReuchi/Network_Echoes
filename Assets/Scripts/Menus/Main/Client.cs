@@ -10,6 +10,7 @@ using System;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEditor.PackageManager;
+using UnityEngine.SceneManagement;
 
 public class Client : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class Client : MonoBehaviour
     //public InputField ipFieldTCP;
     //public InputField passwordFieldTCP;
 
-    bool checkingJoin;
+    [SerializeField] GameObject fadeWaitingRoom;
 
     //[SerializeField] GameObject fadeIn;
 
@@ -33,7 +34,7 @@ public class Client : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        checkingJoin = false;
+        
     }
 
     // Update is called once per frame
@@ -72,8 +73,6 @@ public class Client : MonoBehaviour
 
     public void CreateUdpClient()
     {
-        if (checkingJoin) return;
-
         listen = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         endPoint = new IPEndPoint(IPAddress.Parse(ipField.text), 8000);
         Debug.Log("Ip: " + ipField.text);
@@ -92,10 +91,11 @@ public class Client : MonoBehaviour
         listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
 
         bool exit = false;
+        byte[] recieveInfo = new byte[1024];
+        int recv;
         while (!exit)
         {
-            byte[] recieveInfo = new byte[1024];
-            int recv = listen.ReceiveFrom(recieveInfo, ref server);
+            recv = listen.ReceiveFrom(recieveInfo, ref server);
             data = Encoding.ASCII.GetString(recieveInfo, 0, recv);
 
             if (data == "Wrong Password") return;
@@ -103,23 +103,40 @@ public class Client : MonoBehaviour
             else Debug.LogError("Logic Error");
         }
 
-        // loop
+        DontDestroyOnLoad(gameObject);
+        fadeWaitingRoom.SetActive(true);
+        // waitingRoom
+        while (SceneManager.GetActiveScene().buildIndex != 4)
+        {
+            // wait
+        }
+        data = "OnWaitingRoom";
+        sendInfo = Encoding.ASCII.GetBytes(data);
+        listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
+        exit = false;
+        while (!exit)
+        {
+            recv = listen.ReceiveFrom(recieveInfo, ref server);
+            data = Encoding.ASCII.GetString(recieveInfo, 0, recv);
+            if (data == "OnWaitingRoom") exit = true;
+        }
+        SceneManager.LoadScene(3);
     }
 
-    IEnumerator JoinRoom()
-    {
-        checkingJoin = true;
-        yield return new WaitForSeconds(0.3f);
+    //IEnumerator JoinRoom()
+    //{
+    //    checkingJoin = true;
+    //    yield return new WaitForSeconds(0.3f);
 
-        if (listen.Connected)
-        {
-            Debug.Log("Joining Room...");
-            //fadeIn.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("Imposible to join.");
-            checkingJoin = false;
-        }
-    }
+    //    if (listen.Connected)
+    //    {
+    //        Debug.Log("Joining Room...");
+    //        //fadeIn.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Imposible to join.");
+    //        checkingJoin = false;
+    //    }
+    //}
 }
