@@ -143,6 +143,21 @@ public class Client : MonoBehaviour
         goToGame = true;
 
         // in game
+        while (true)
+        {
+            SendInfo();
+            RecieveInfo();
+        }
+    }
+
+    void SendInfo()
+    {
+
+    }
+
+    void RecieveInfo()
+    {
+
     }
 
     //IEnumerator JoinRoom()
