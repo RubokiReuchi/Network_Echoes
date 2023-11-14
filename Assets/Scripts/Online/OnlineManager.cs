@@ -5,7 +5,10 @@ using UnityEngine.InputSystem;
 
 public class OnlineManager : MonoBehaviour
 {
-    static public OnlineManager onlineManager;
+    static public OnlineManager instance;
+
+    public SerializedThings remoteImputs;
+        
 
     [SerializeField] PlayerController boyController;
     [SerializeField] PlayerController girlController;
@@ -18,7 +21,7 @@ public class OnlineManager : MonoBehaviour
     [SerializeField] RemoteProjectileEchoAttack girlRemoteEcho;
     private void Awake()
     {
-        onlineManager = this; // revisar
+        instance = this; // revisar
     }
 
     // Start is called before the first frame update

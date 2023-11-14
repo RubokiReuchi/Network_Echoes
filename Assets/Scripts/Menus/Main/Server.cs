@@ -10,6 +10,8 @@ using System.Text;
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using static Serialize;
+using System.IO;
 
 public class Server : MonoBehaviour
 {
@@ -24,6 +26,8 @@ public class Server : MonoBehaviour
     EndPoint client;
 
     bool goToGame = false;
+
+    bool exitGameLoop = false;
 
     //Tcp
     //Socket listenTCP;
@@ -162,27 +166,38 @@ public class Server : MonoBehaviour
             threadSend.Start();
             Thread threadRecieve = new Thread(RecieveInfo);
             threadRecieve.Start();
+            Debug.Log("Logic Error");
         }
     }
 
     void SendInfo()
     {
-        while (true)
+        while (!exitGameLoop)
         {
-            Debug.Log("Server Send");
+
+            //Debug.Log("Server Send");
+            Serialize.instance.SerializeJson();
         }
+
     }
 
     void RecieveInfo()
     {
-        while (true)
+        while (!exitGameLoop)
         {
             Debug.Log("Server Recieve");
+            Serialize.instance.DeserializeJson(ref OnlineManager.instance.remoteImputs);
         }
     }
 
     public string GetLocalIP()
     {
         return Dns.GetHostEntry(Dns.GetHostName()).AddressList.First(f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        exitGameLoop = true;
     }
 }
