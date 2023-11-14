@@ -12,10 +12,10 @@ public class OnlineManager : MonoBehaviour
     [SerializeField] RemotePlayerController boyRemoteController;
     [SerializeField] RemotePlayerController girlRemoteController;
 
-    [SerializeField] ProjectileEchoAttack boyEcho;
-    [SerializeField] DetectorEchoAttack girlEcho;
-    [SerializeField] RemoteProjectileEchoAttack boyRemoteEcho;
-    [SerializeField] RemoteDetectorEchoAttack girlRemoteEcho;
+    [SerializeField] DetectorEchoAttack boyEcho; 
+    [SerializeField] ProjectileEchoAttack girlEcho;
+    [SerializeField] RemoteDetectorEchoAttack boyRemoteEcho;
+    [SerializeField] RemoteProjectileEchoAttack girlRemoteEcho;
     private void Awake()
     {
         onlineManager = this; // revisar
