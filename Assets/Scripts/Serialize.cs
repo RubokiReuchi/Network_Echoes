@@ -25,6 +25,7 @@ public class Serialize : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        stream = new MemoryStream();
     }
 
     // Start is called before the first frame update
@@ -53,7 +54,7 @@ public class Serialize : MonoBehaviour
 
         
         string json = JsonUtility.ToJson(t);
-        stream = new MemoryStream();
+        // stream = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(stream);
         writer.Write(json);
     }
