@@ -169,7 +169,7 @@ public class Server : MonoBehaviour
     {
         while (true)
         {
-
+            Debug.Log("Server Send");
         }
     }
 
@@ -177,7 +177,7 @@ public class Server : MonoBehaviour
     {
         while (true)
         {
-
+            Debug.Log("Server Recieve");
         }
     }
 

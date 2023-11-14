@@ -153,7 +153,7 @@ public class Client : MonoBehaviour
     {
         while (true)
         {
-
+            Debug.Log("Client Send");
         }
     }
 
@@ -161,7 +161,7 @@ public class Client : MonoBehaviour
     {
         while (true)
         {
-
+            Debug.Log("Client Recieve");
         }
     }
 
