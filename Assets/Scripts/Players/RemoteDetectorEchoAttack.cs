@@ -23,6 +23,8 @@ public class RemoteDetectorEchoAttack : MonoBehaviour
     [SerializeField] AudioClip accord2;
     [SerializeField] AudioClip accord3;
 
+    SerializedThings inputs;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +32,8 @@ public class RemoteDetectorEchoAttack : MonoBehaviour
 
         upgraded = false;
 
-        
+
+        inputs = OnlineManager.instance.remoteImputs;
     }
 
     // Update is called once per frame
@@ -55,7 +58,7 @@ public class RemoteDetectorEchoAttack : MonoBehaviour
     {
         // shot
         echoInput = false;
-        if (Input.GetKeyDown(KeyCode.LeftShift)) echoInput = true;
+        if (inputs.shiftPressed) echoInput = true;
     }
 
     void EchoReadyAgain()

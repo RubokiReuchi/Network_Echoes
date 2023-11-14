@@ -12,7 +12,6 @@ public class RemotePlayerController : MonoBehaviour
     [SerializeField] AudioClip walk;
     [SerializeField] AudioClip landing;
 
-
     [SerializeField] bool player1;
 
     [Header("Movement")]
@@ -44,6 +43,8 @@ public class RemotePlayerController : MonoBehaviour
 
     public static bool cutsceneOn = false;
 
+    SerializedThings inputs;
+
     private void Start()
     {
         cutsceneOn = false;
@@ -57,6 +58,8 @@ public class RemotePlayerController : MonoBehaviour
         rotationDirection = 0;
 
         keyAttached = null;
+
+        inputs = OnlineManager.instance.remoteImputs;
     }
 
     void Update()
@@ -135,12 +138,12 @@ public class RemotePlayerController : MonoBehaviour
     {
         // movement
         movementInput = 0;
-        if (Input.GetKey(KeyCode.A)) movementInput--;
-        if (Input.GetKey(KeyCode.D)) movementInput++;
+        if (inputs.Apressed) movementInput--;
+        if (inputs.Dpressed) movementInput++;
 
         // jump
         jumpInput = false;
-        if (Input.GetKeyDown(KeyCode.Space)) jumpInput = true;
+        if (inputs.spacePressed) jumpInput = true;
     }
 
     public void JumpForce()
