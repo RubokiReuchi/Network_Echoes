@@ -166,7 +166,6 @@ public class Server : MonoBehaviour
             threadSend.Start();
             Thread threadRecieve = new Thread(RecieveInfo);
             threadRecieve.Start();
-            Debug.Log("Logic Error");
         }
     }
 
@@ -185,6 +184,7 @@ public class Server : MonoBehaviour
     {
         while (!exitGameLoop)
         {
+            if (OnlineManager.instance != null) continue;
             Debug.Log("Server Recieve");
             Serialize.instance.DeserializeJson(ref OnlineManager.instance.remoteImputs);
         }

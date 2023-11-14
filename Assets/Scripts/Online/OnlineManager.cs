@@ -8,7 +8,6 @@ public class OnlineManager : MonoBehaviour
     static public OnlineManager instance;
 
     public SerializedThings remoteImputs;
-        
 
     [SerializeField] PlayerController boyController;
     [SerializeField] PlayerController girlController;
