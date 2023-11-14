@@ -32,6 +32,8 @@ public class Client : MonoBehaviour
     bool goToGame = false;
     public float waitSecs = 0;
 
+    bool exitGameLoop = false;
+
     //[SerializeField] GameObject fadeIn;
 
 
@@ -151,17 +153,20 @@ public class Client : MonoBehaviour
 
     void SendInfo()
     {
-        while (true)
+        while (!exitGameLoop)
         {
-            Debug.Log("Client Send");
+
+            //Debug.Log("Server Send");
+            Serialize.instance.SerializeJson();
         }
     }
 
     void RecieveInfo()
     {
-        while (true)
+        while (!exitGameLoop)
         {
-            Debug.Log("Client Recieve");
+            Debug.Log("Server Recieve");
+            Serialize.instance.DeserializeJson(ref OnlineManager.instance.remoteImputs);
         }
     }
 
@@ -181,4 +186,9 @@ public class Client : MonoBehaviour
     //        checkingJoin = false;
     //    }
     //}
+
+    private void OnApplicationQuit()
+    {
+        exitGameLoop = true;
+    }
 }
