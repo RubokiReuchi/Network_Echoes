@@ -9,6 +9,13 @@ public class OnlineManager : MonoBehaviour
 
     [SerializeField] PlayerController boyController;
     [SerializeField] PlayerController girlController;
+    [SerializeField] RemotePlayerController boyRemoteController;
+    [SerializeField] RemotePlayerController girlRemoteController;
+
+    [SerializeField] ProjectileEchoAttack boyEcho;
+    [SerializeField] DetectorEchoAttack girlEcho;
+    [SerializeField] RemoteProjectileEchoAttack boyRemoteEcho;
+    [SerializeField] RemoteDetectorEchoAttack girlRemoteEcho;
     private void Awake()
     {
         onlineManager = this; // revisar
@@ -17,8 +24,20 @@ public class OnlineManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameObject.FindGameObjectWithTag("Server")) girlController.enabled = false;
-        else boyController.enabled = false;
+        if (GameObject.FindGameObjectWithTag("Server"))
+        {
+            boyController.enabled = true;
+            girlRemoteController.enabled = true;
+            boyEcho.enabled = true;
+            girlRemoteEcho.enabled = true;
+        }
+        else
+        {
+            girlController.enabled = true;
+            boyRemoteController.enabled = true;
+            girlEcho.enabled = true;
+            boyRemoteEcho.enabled = true;
+        }
     }
 
     // Update is called once per frame

@@ -143,23 +143,26 @@ public class Client : MonoBehaviour
         goToGame = true;
 
         // in game
-        while (true)
-        {
-            Thread threadSend = new Thread(SendInfo);
-            threadSend.Start();
-            Thread threadRecieve = new Thread(RecieveInfo);
-            threadRecieve.Start();
-        }
+        Thread threadSend = new Thread(SendInfo);
+        threadSend.Start();
+        Thread threadRecieve = new Thread(RecieveInfo);
+        threadRecieve.Start();
     }
 
     void SendInfo()
     {
+        while (true)
+        {
 
+        }
     }
 
     void RecieveInfo()
     {
+        while (true)
+        {
 
+        }
     }
 
     //IEnumerator JoinRoom()
