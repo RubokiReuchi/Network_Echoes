@@ -22,10 +22,9 @@ public class Serialize : MonoBehaviour
     static MemoryStream stream;
     bool a = true;
 
-   
     private void Awake()
     {
-        instance= this;
+        instance = this;
     }
 
     // Start is called before the first frame update

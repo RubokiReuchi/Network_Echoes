@@ -185,7 +185,7 @@ public class Server : MonoBehaviour
         while (!exitGameLoop)
         {
             if (OnlineManager.instance == null) continue;
-            Debug.Log("Server Recieve");
+            //Debug.Log("Server Recieve");
             Serialize.instance.DeserializeJson(ref OnlineManager.instance.remoteImputs);
         }
     }
