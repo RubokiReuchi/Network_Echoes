@@ -191,7 +191,6 @@ public class Server : MonoBehaviour
             byte[] receiveInfo = new byte[1024];
             listen.ReceiveFrom(receiveInfo , ref client);
             Serialize.instance.DeserializeJson(receiveInfo, ref OnlineManager.instance.remoteImputs);
-
         }
     }
 

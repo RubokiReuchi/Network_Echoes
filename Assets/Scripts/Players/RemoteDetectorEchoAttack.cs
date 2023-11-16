@@ -52,6 +52,8 @@ public class RemoteDetectorEchoAttack : MonoBehaviour
             if (upgraded) Invoke("EchoReadyAgain", upgradeCooldown);
             else Invoke("EchoReadyAgain", cooldown);
         }
+
+        inputs.Reset();
     }
 
     void ReadInputs()

@@ -124,6 +124,7 @@ public class RemotePlayerController : MonoBehaviour
             animator.SetTrigger("Cutscene");
         }
         
+        inputs.Reset();
     }
 
     private void OnCollisionEnter(Collision collision)

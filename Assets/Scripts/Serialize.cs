@@ -14,6 +14,15 @@ public class SerializedThings
     public bool Dpressed = false;
     public bool spacePressed = false;
     public bool shiftPressed = false;
+
+    public void Reset()
+    {
+        Apressed = false;
+        Wpressed = false;
+        Dpressed = false;
+        spacePressed = false;
+        shiftPressed = false;
+    }
 }
 
 public class Serialize : MonoBehaviour
@@ -33,16 +42,16 @@ public class Serialize : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
- 
+
 
     public MemoryStream SerializeJson()
     {
@@ -50,8 +59,9 @@ public class Serialize : MonoBehaviour
         var t = new SerializedThings();
         t.spacePressed = false;
 
-        if(Input.GetKey(KeyCode.Space)) {
-        t.spacePressed = true;
+        if (Input.GetKey(KeyCode.Space))
+        {
+            t.spacePressed = true;
         }
 
         string json = JsonUtility.ToJson(t);
@@ -60,7 +70,7 @@ public class Serialize : MonoBehaviour
 
         writer.Write(json);
 
-        return  stream; 
+        return stream;
     }
 
     public void DeserializeJson(byte[] sendInfo, ref SerializedThings serializedThings)
@@ -75,7 +85,7 @@ public class Serialize : MonoBehaviour
         string json = reader.ReadString();
         Debug.Log(json);
         t = JsonUtility.FromJson<SerializedThings>(json);
-        Debug.Log(t.spacePressed.ToString() );
+        Debug.Log(t.spacePressed.ToString());
 
     }
 }

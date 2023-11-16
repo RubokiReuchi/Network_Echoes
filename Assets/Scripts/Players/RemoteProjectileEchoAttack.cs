@@ -67,6 +67,8 @@ public class RemoteProjectileEchoAttack : MonoBehaviour
             if (upgraded) Invoke("EchoReadyAgain", upgradeCooldown);
             else Invoke("EchoReadyAgain", cooldown);
         }
+
+        inputs.Reset();
     }
 
     void ReadInputs()
