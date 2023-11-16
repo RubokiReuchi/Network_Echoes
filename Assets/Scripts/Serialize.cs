@@ -22,6 +22,8 @@ public class Serialize : MonoBehaviour
     static MemoryStream stream;
     bool a = true;
 
+    byte[] receiveInfo;
+
     private void Awake()
     {
         instance = this;
@@ -42,32 +44,38 @@ public class Serialize : MonoBehaviour
 
  
 
-    public void SerializeJson()
+    public MemoryStream SerializeJson()
     {
 
         var t = new SerializedThings();
         t.spacePressed = false;
 
-        if(Input.GetKey(KeyCode.W)) {
+        if(Input.GetKey(KeyCode.Space)) {
         t.spacePressed = true;
         }
 
-        
         string json = JsonUtility.ToJson(t);
-        // stream = new MemoryStream();
+        stream = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(stream);
+
         writer.Write(json);
+
+        return  stream; 
     }
 
-    public void DeserializeJson(ref SerializedThings serializedThings)
+    public void DeserializeJson(byte[] sendInfo, ref SerializedThings serializedThings)
     {
+        byte[] myByteArray = new byte[10];
         var t = new SerializedThings();
+
+        MemoryStream stream = new MemoryStream(myByteArray);
         BinaryReader reader = new BinaryReader(stream);
         stream.Seek(0, SeekOrigin.Begin);
 
         string json = reader.ReadString();
         Debug.Log(json);
         t = JsonUtility.FromJson<SerializedThings>(json);
-        //Debug.Log(t.hp.ToString() + " " + t.pos.ToString());
+        Debug.Log(t.spacePressed.ToString() );
+
     }
 }

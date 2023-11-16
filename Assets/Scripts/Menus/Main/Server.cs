@@ -37,6 +37,7 @@ public class Server : MonoBehaviour
 
     [SerializeField] GameObject fadeWaitingRoom;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -173,9 +174,10 @@ public class Server : MonoBehaviour
     {
         while (!exitGameLoop)
         {
-
             //Debug.Log("Server Send");
-            Serialize.instance.SerializeJson();
+            byte[] sendInfo = new byte[1024];
+            sendInfo = Serialize.instance.SerializeJson().GetBuffer();
+            listen.SendTo(sendInfo , sendInfo.Length, SocketFlags.None, client);
         }
 
     }
@@ -186,7 +188,10 @@ public class Server : MonoBehaviour
         {
             if (OnlineManager.instance == null || Serialize.instance == null) continue;
             //Debug.Log("Server Recieve");
-            Serialize.instance.DeserializeJson(ref OnlineManager.instance.remoteImputs);
+            byte[] receiveInfo = new byte[1024];
+            listen.ReceiveFrom(receiveInfo , ref client);
+            Serialize.instance.DeserializeJson(receiveInfo, ref OnlineManager.instance.remoteImputs);
+
         }
     }
 

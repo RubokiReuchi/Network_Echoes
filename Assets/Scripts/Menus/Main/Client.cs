@@ -34,6 +34,11 @@ public class Client : MonoBehaviour
 
     bool exitGameLoop = false;
 
+    byte[] sendInfo = new byte[1024];
+    byte[] receiveInfo = new byte[1024];
+
+    EndPoint server;
+
     //[SerializeField] GameObject fadeIn;
 
 
@@ -107,7 +112,7 @@ public class Client : MonoBehaviour
     void ConnectWithUdpServer()
     {
         IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-        EndPoint server = (EndPoint)sender;
+        server = (EndPoint)sender;
 
         byte[] sendInfo = new byte[2048];
         string data = passwordField.text;
@@ -157,7 +162,9 @@ public class Client : MonoBehaviour
         {
 
             //Debug.Log("Server Send");
-            Serialize.instance.SerializeJson();
+            
+            sendInfo = Serialize.instance.SerializeJson().GetBuffer();
+            listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
         }
     }
 
@@ -167,7 +174,9 @@ public class Client : MonoBehaviour
         {
             if (OnlineManager.instance == null) continue;
             //Debug.Log("Server Recieve");
-            Serialize.instance.DeserializeJson(ref OnlineManager.instance.remoteImputs);
+            byte[] receiveInfo = new byte[1024];
+            listen.ReceiveFrom(receiveInfo, ref server);
+            Serialize.instance.DeserializeJson(receiveInfo, ref OnlineManager.instance.remoteImputs);
         }
     }
 
