@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using System.Net;
 using UnityEngine;
 using System.Threading;
-using UnityEngine.tvOS;
 using System;
 using System.Text;
 using System.Linq;
@@ -174,6 +173,7 @@ public class Server : MonoBehaviour
     {
         while (!exitGameLoop)
         {
+            if (OnlineManager.instance == null || Serialize.instance == null) continue;
             //Debug.Log("Server Send");
             byte[] sendInfo = new byte[1024];
             sendInfo = Serialize.instance.SerializeJson().GetBuffer();

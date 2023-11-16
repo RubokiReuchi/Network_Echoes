@@ -55,7 +55,6 @@ public class Serialize : MonoBehaviour
 
     public MemoryStream SerializeJson()
     {
-
         var t = new SerializedThings();
         t.spacePressed = false;
 

@@ -9,7 +9,6 @@ using System.Threading;
 using System;
 using UnityEngine.UI;
 using System.Linq;
-using UnityEditor.PackageManager;
 using UnityEngine.SceneManagement;
 
 public class Client : MonoBehaviour
@@ -160,9 +159,8 @@ public class Client : MonoBehaviour
     {
         while (!exitGameLoop)
         {
-
+            if (OnlineManager.instance == null || Serialize.instance == null) continue;
             //Debug.Log("Server Send");
-            
             sendInfo = Serialize.instance.SerializeJson().GetBuffer();
             listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
         }
@@ -172,7 +170,7 @@ public class Client : MonoBehaviour
     {
         while (!exitGameLoop)
         {
-            if (OnlineManager.instance == null) continue;
+            if (OnlineManager.instance == null || Serialize.instance == null) continue;
             //Debug.Log("Server Recieve");
             byte[] receiveInfo = new byte[1024];
             listen.ReceiveFrom(receiveInfo, ref server);
