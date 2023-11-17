@@ -7,23 +7,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-public class SerializedThings
-{
-    public bool Apressed = false;
-    public bool Wpressed = false;
-    public bool Dpressed = false;
-    public bool spacePressed = false;
-    public bool shiftPressed = false;
-
-    public void Reset()
-    {
-        Apressed = false;
-        Wpressed = false;
-        Dpressed = false;
-        spacePressed = false;
-        shiftPressed = false;
-    }
-}
 
 public class Serialize : MonoBehaviour
 {
@@ -32,6 +15,8 @@ public class Serialize : MonoBehaviour
     bool a = true;
 
     byte[] receiveInfo;
+
+    RemoteInputs t = new RemoteInputs();
 
     private void Awake()
     {
@@ -42,27 +27,45 @@ public class Serialize : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        t.Dpressed = false;
+        t.Wpressed = false;
+        t.Apressed = false;
+        t.spacePressed = false;
+        t.shiftPressed = false;
 
+        if (Input.GetKey(KeyCode.D))
+        {
+            t.Dpressed = true;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            t.Wpressed = true;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            t.Apressed = true;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            t.spacePressed = true;
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            t.shiftPressed = true;
+        }
+        
     }
 
 
 
     public MemoryStream SerializeJson()
     {
-        var t = new SerializedThings();
-        t.spacePressed = false;
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            t.spacePressed = true;
-        }
-
         string json = JsonUtility.ToJson(t);
         stream = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(stream);
@@ -72,19 +75,15 @@ public class Serialize : MonoBehaviour
         return stream;
     }
 
-    public void DeserializeJson(byte[] sendInfo, ref SerializedThings serializedThings)
+    public void DeserializeJson(byte[] sendInfo, ref RemoteInputs serializedThings)
     {
-        byte[] myByteArray = new byte[10];
-        var t = new SerializedThings();
-
-        MemoryStream stream = new MemoryStream(myByteArray);
+        
+        MemoryStream stream = new MemoryStream(sendInfo);
         BinaryReader reader = new BinaryReader(stream);
         stream.Seek(0, SeekOrigin.Begin);
-
         string json = reader.ReadString();
-        Debug.Log(json);
-        t = JsonUtility.FromJson<SerializedThings>(json);
-        Debug.Log(t.spacePressed.ToString());
+        //Debug.Log(json);
+        JsonUtility.FromJsonOverwrite(json, serializedThings);
 
     }
 }

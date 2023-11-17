@@ -9768,9 +9768,10 @@ GameObject:
   - component: {fileID: 1987602871}
   - component: {fileID: 1987602870}
   - component: {fileID: 1987602872}
+  - component: {fileID: 1987602873}
   m_Layer: 0
   m_Name: OnlineManager
-  m_TagString: Untagged
+  m_TagString: OnlineManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9822,6 +9823,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d739ee06d12cc4a8cab3b5285acd10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1987602873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987602869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff3c7de6c01cea41ba779ba846a793f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Apressed: 0
+  Wpressed: 0
+  Dpressed: 0
+  spacePressed: 0
+  shiftPressed: 0
 --- !u!1 &2004105655
 GameObject:
   m_ObjectHideFlags: 0

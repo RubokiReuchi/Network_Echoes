@@ -10,6 +10,7 @@ using System;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 
 public class Client : MonoBehaviour
 {
@@ -33,10 +34,12 @@ public class Client : MonoBehaviour
 
     bool exitGameLoop = false;
 
-    byte[] sendInfo = new byte[1024];
-    byte[] receiveInfo = new byte[1024];
+   
 
     EndPoint server;
+
+    RemoteInputs reInputs;
+    bool asignInputClass;
 
     //[SerializeField] GameObject fadeIn;
 
@@ -60,6 +63,11 @@ public class Client : MonoBehaviour
         {
             goToGame = false;
             SceneManager.LoadScene(3);
+        }
+        else if (asignInputClass)
+        {
+            asignInputClass = false;
+            reInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
         }
 
         if (waitSecs > 0)
@@ -161,6 +169,7 @@ public class Client : MonoBehaviour
         {
             if (OnlineManager.instance == null || Serialize.instance == null) continue;
             //Debug.Log("Server Send");
+            byte[] sendInfo = new byte[1024];
             sendInfo = Serialize.instance.SerializeJson().GetBuffer();
             listen.SendTo(sendInfo, sendInfo.Length, SocketFlags.None, endPoint);
         }
@@ -171,10 +180,16 @@ public class Client : MonoBehaviour
         while (!exitGameLoop)
         {
             if (OnlineManager.instance == null || Serialize.instance == null) continue;
+            if (!reInputs)
+            {
+                asignInputClass = true;
+                continue;
+            }
+           
             //Debug.Log("Server Recieve");
             byte[] receiveInfo = new byte[1024];
             listen.ReceiveFrom(receiveInfo, ref server);
-            Serialize.instance.DeserializeJson(receiveInfo, ref OnlineManager.instance.remoteImputs);
+            Serialize.instance.DeserializeJson(receiveInfo, ref reInputs);
         }
     }
 

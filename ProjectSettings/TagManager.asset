@@ -23,6 +23,7 @@ TagManager:
   - CutsceneTrigger
   - Server
   - Client
+  - OnlineManager
   layers:
   - Default
   - TransparentFX

@@ -25,7 +25,7 @@ public class RemoteProjectileEchoAttack : MonoBehaviour
     
     [SerializeField] AudioClip scream2;
 
-    SerializedThings inputs;
+    RemoteInputs inputs;
 
     // Start is called before the first frame update
     void Start()
@@ -36,12 +36,14 @@ public class RemoteProjectileEchoAttack : MonoBehaviour
 
         upgraded = false;
 
-        inputs = OnlineManager.instance.remoteImputs;
+        inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (inputs == null) return;
+
         if (ManagePause.instance.paused) return;
 
         ReadInputs();
@@ -68,7 +70,7 @@ public class RemoteProjectileEchoAttack : MonoBehaviour
             else Invoke("EchoReadyAgain", cooldown);
         }
 
-        inputs.Reset();
+        inputs.ResetEcho();
     }
 
     void ReadInputs()

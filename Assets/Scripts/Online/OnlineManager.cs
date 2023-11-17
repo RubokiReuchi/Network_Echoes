@@ -7,8 +7,6 @@ public class OnlineManager : MonoBehaviour
 {
     static public OnlineManager instance;
 
-    public SerializedThings remoteImputs = new();
-
     [SerializeField] PlayerController boyController;
     [SerializeField] PlayerController girlController;
     [SerializeField] RemotePlayerController boyRemoteController;
@@ -21,6 +19,8 @@ public class OnlineManager : MonoBehaviour
     private void Awake()
     {
         instance = this; // revisar
+
+        
     }
 
     // Start is called before the first frame update
@@ -40,7 +40,7 @@ public class OnlineManager : MonoBehaviour
             girlEcho.enabled = true;
             boyRemoteEcho.enabled = true;
         }
-        remoteImputs.Reset();
+        
     }
 
     // Update is called once per frame

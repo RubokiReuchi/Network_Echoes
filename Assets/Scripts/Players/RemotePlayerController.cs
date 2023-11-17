@@ -43,7 +43,7 @@ public class RemotePlayerController : MonoBehaviour
 
     public static bool cutsceneOn = false;
 
-    SerializedThings inputs;
+    RemoteInputs inputs;
 
     private void Start()
     {
@@ -59,11 +59,14 @@ public class RemotePlayerController : MonoBehaviour
 
         keyAttached = null;
 
-        inputs = OnlineManager.instance.remoteImputs;
+        inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
     }
 
     void Update()
     {
+
+        if (inputs == null) return;
+
         if (ManagePause.instance.paused) return;
 
         rb.angularVelocity = new Vector3(0, 0, 0);
@@ -124,7 +127,7 @@ public class RemotePlayerController : MonoBehaviour
             animator.SetTrigger("Cutscene");
         }
         
-        inputs.Reset();
+        inputs.ResetMovement();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -137,10 +140,15 @@ public class RemotePlayerController : MonoBehaviour
 
     void ReadInputs()
     {
+        
         // movement
         movementInput = 0;
         if (inputs.Apressed) movementInput--;
-        if (inputs.Dpressed) movementInput++;
+        if (inputs.Dpressed)
+        {
+            movementInput++;
+
+        }
 
         // jump
         jumpInput = false;

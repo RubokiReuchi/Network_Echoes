@@ -1,16 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using UnityEngine;
 using System.Threading;
-using System;
 using System.Text;
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using static Serialize;
-using System.IO;
+
 
 public class Server : MonoBehaviour
 {
@@ -36,6 +32,9 @@ public class Server : MonoBehaviour
 
     [SerializeField] GameObject fadeWaitingRoom;
 
+    RemoteInputs reInputs;
+    bool asignInputClass;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +50,11 @@ public class Server : MonoBehaviour
         {
             goToGame = false;
             SceneManager.LoadScene(3);
+        }
+        else if (asignInputClass)
+        {
+            asignInputClass = false;
+            reInputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
         }
     }
 
@@ -187,10 +191,15 @@ public class Server : MonoBehaviour
         while (!exitGameLoop)
         {
             if (OnlineManager.instance == null || Serialize.instance == null) continue;
+            if (!reInputs)
+            {
+                asignInputClass = true;
+                continue;
+            }
             //Debug.Log("Server Recieve");
             byte[] receiveInfo = new byte[1024];
-            listen.ReceiveFrom(receiveInfo , ref client);
-            Serialize.instance.DeserializeJson(receiveInfo, ref OnlineManager.instance.remoteImputs);
+            listen.ReceiveFrom(receiveInfo, ref client);
+            Serialize.instance.DeserializeJson(receiveInfo, ref reInputs);
         }
     }
 
