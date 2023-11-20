@@ -32,7 +32,6 @@ public class RemoteDetectorEchoAttack : MonoBehaviour
 
         upgraded = false;
 
-
         inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
     }
 

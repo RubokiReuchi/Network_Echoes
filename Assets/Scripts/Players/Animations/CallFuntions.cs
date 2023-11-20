@@ -7,6 +7,9 @@ public class CallFuntions : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] ProjectileEchoAttack pEchoAttack;
     [SerializeField] DetectorEchoAttack dEchoAttack;
+    [SerializeField] RemotePlayerController playerControllerRemote;
+    [SerializeField] RemoteProjectileEchoAttack pEchoAttackRemote;
+    [SerializeField] RemoteDetectorEchoAttack dEchoAttackRemote;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +25,15 @@ public class CallFuntions : MonoBehaviour
 
     public void CallPlayerFuntionAttack()
     {
-        if (pEchoAttack) pEchoAttack.SpawnProjectile();
-        if (dEchoAttack) dEchoAttack.CastAttack();
+        if (pEchoAttack && pEchoAttack.enabled) pEchoAttack.SpawnProjectile();
+        else if (pEchoAttackRemote && pEchoAttackRemote.enabled) pEchoAttackRemote.SpawnProjectile();
+        if (dEchoAttack && dEchoAttack.enabled) dEchoAttack.CastAttack();
+        else if (dEchoAttackRemote && dEchoAttackRemote.enabled) dEchoAttackRemote.CastAttack();
     }
 
     public void CallPlayerLandingAudio()
     {
-        if (playerController) playerController.PlayLandingSound();
+        if (playerController && playerController.enabled) playerController.PlayLandingSound();
+        else if (playerControllerRemote && playerControllerRemote.enabled) playerControllerRemote.PlayLandingSound();
     }
 }

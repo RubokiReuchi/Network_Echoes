@@ -9326,6 +9326,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5252991203506577543, guid: 3ac5c8d865adca44c826c32972863740, type: 3}
+      propertyPath: pEchoAttackRemote
+      value: 
+      objectReference: {fileID: 1943483828}
+    - target: {fileID: 5252991203506577543, guid: 3ac5c8d865adca44c826c32972863740, type: 3}
+      propertyPath: playerControllerRemote
+      value: 
+      objectReference: {fileID: 1943483829}
     - target: {fileID: 6843130103917848836, guid: 3ac5c8d865adca44c826c32972863740, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -10646,6 +10654,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1572755290695436656, guid: cd15258bd5a61b14dbd35e27fbdffb78, type: 3}
+      propertyPath: dEchoAttackRemote
+      value: 
+      objectReference: {fileID: 1572755291018136868}
+    - target: {fileID: 1572755290695436656, guid: cd15258bd5a61b14dbd35e27fbdffb78, type: 3}
+      propertyPath: playerControllerRemote
+      value: 
+      objectReference: {fileID: 1572755291018136869}
     - target: {fileID: 1572755291974121532, guid: cd15258bd5a61b14dbd35e27fbdffb78, type: 3}
       propertyPath: m_Enabled
       value: 0
