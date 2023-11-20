@@ -9,7 +9,7 @@ public class RemoteProjectileEchoAttack : MonoBehaviour
 
     [SerializeField] Transform spawn;
     [SerializeField] GameObject echoPrefab;
-    PlayerController playerController;
+    RemotePlayerController playerController;
 
     bool echoInput;
     public bool echoReady;
@@ -30,7 +30,7 @@ public class RemoteProjectileEchoAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<RemotePlayerController>();
        
         echoReady = true;
 
