@@ -18,7 +18,7 @@ public class Serialize : MonoBehaviour
 
     RemoteInputs t = new RemoteInputs();
 
-    [SerializeField] Transform controlledCharacter;
+    public Transform controlledCharacter;
 
     private void Awake()
     {

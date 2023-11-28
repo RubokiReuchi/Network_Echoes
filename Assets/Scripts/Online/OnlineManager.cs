@@ -7,6 +7,8 @@ public class OnlineManager : MonoBehaviour
 {
     static public OnlineManager instance;
 
+    [SerializeField] Serialize serialize;
+
     [SerializeField] PlayerController boyController;
     [SerializeField] PlayerController girlController;
     [SerializeField] RemotePlayerController boyRemoteController;
@@ -19,8 +21,6 @@ public class OnlineManager : MonoBehaviour
     private void Awake()
     {
         instance = this; // revisar
-
-        
     }
 
     // Start is called before the first frame update
@@ -32,6 +32,7 @@ public class OnlineManager : MonoBehaviour
             girlRemoteController.enabled = true;
             boyEcho.enabled = true;
             girlRemoteEcho.enabled = true;
+            serialize.controlledCharacter = boyController.transform;
         }
         else
         {
@@ -39,6 +40,7 @@ public class OnlineManager : MonoBehaviour
             boyRemoteController.enabled = true;
             girlEcho.enabled = true;
             boyRemoteEcho.enabled = true;
+            serialize.controlledCharacter = girlController.transform;
         }
         
     }
