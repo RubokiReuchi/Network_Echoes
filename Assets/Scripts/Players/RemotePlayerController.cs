@@ -229,7 +229,7 @@ public class RemotePlayerController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(5.0f);
+            yield return new WaitForSeconds(5.0f);
             transform.position = new Vector3(inputs.positionX, inputs.positionY, 0);
             Debug.Log("PositionUpdated");
         }
