@@ -60,6 +60,7 @@ public class RemotePlayerController : MonoBehaviour
         keyAttached = null;
 
         inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
+        StartCoroutine(UpdatePositionCo());
     }
 
     void Update()
@@ -221,6 +222,16 @@ public class RemotePlayerController : MonoBehaviour
             int controllerType2 = SettingsManager.instance.controllerType2;
             if (controllerType2 == 0 && SettingsManager.instance.controllerType1 == 1) PlayerInput.all[playerIndex].SwitchCurrentControlScheme("KeyboardWASD", Keyboard.current);
             else PlayerInput.all[playerIndex].SwitchCurrentControlScheme("KeyboardARROWS", Keyboard.current);
+        }
+    }
+
+    IEnumerator UpdatePositionCo()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5.0f);
+            transform.position = new Vector3(inputs.positionX, inputs.positionY, inputs.positionZ);
+            Debug.Log("PositionUpdated");
         }
     }
 

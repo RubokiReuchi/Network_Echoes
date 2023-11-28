@@ -18,6 +18,8 @@ public class Serialize : MonoBehaviour
 
     RemoteInputs t = new RemoteInputs();
 
+    [SerializeField] Transform controlledCharacter;
+
     private void Awake()
     {
         instance = this;
@@ -59,7 +61,10 @@ public class Serialize : MonoBehaviour
         {
             t.shiftPressed = true;
         }
-        
+
+        t.positionX = controlledCharacter.position.x;
+        t.positionY = controlledCharacter.position.y;
+        t.positionZ = controlledCharacter.position.z;
     }
 
 
