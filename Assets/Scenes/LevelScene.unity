@@ -9796,6 +9796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c78e747d7c8954fab686dd11079538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serialize: {fileID: 1987602872}
   boyController: {fileID: 1572755291018136866}
   girlController: {fileID: 1943483823}
   boyRemoteController: {fileID: 1572755291018136869}
@@ -9831,6 +9832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d739ee06d12cc4a8cab3b5285acd10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controlledCharacter: {fileID: 0}
 --- !u!114 &1987602873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9848,6 +9850,9 @@ MonoBehaviour:
   Dpressed: 0
   spacePressed: 0
   shiftPressed: 0
+  positionX: 0
+  positionY: 0
+  positionZ: 0
 --- !u!1 &2004105655
 GameObject:
   m_ObjectHideFlags: 0
