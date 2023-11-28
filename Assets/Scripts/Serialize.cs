@@ -64,7 +64,6 @@ public class Serialize : MonoBehaviour
 
         t.positionX = controlledCharacter.position.x;
         t.positionY = controlledCharacter.position.y;
-        t.positionZ = controlledCharacter.position.z;
     }
 
 
