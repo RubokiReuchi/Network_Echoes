@@ -9,12 +9,9 @@ public class RemoteInputs : MonoBehaviour
     public bool Dpressed = false;
     public bool spacePressed = false;
     public bool shiftPressed = false;
-
     public float positionX = 0;
     public float positionY = 0;
 
-    public int checkpoint = -1;
-    public bool death = false;
     public void ResetMovement()
     {
         Apressed = false;
