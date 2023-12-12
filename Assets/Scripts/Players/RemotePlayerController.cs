@@ -60,7 +60,7 @@ public class RemotePlayerController : MonoBehaviour
         keyAttached = null;
 
         inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
-        StartCoroutine(UpdatePositionCo());
+        //StartCoroutine(UpdatePositionCo());
     }
 
     void Update()
