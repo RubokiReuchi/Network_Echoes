@@ -52,9 +52,6 @@ public class ManagePause : MonoBehaviour
             remotePause.SetActive(false);
             PauseGame(false);
         }
-
-        if (pauseMenu.activeInHierarchy) inputs.paused = true;
-        else inputs.paused = false;
     }
 
     public void PauseGame(bool pause)
@@ -62,5 +59,10 @@ public class ManagePause : MonoBehaviour
         paused = pause;
         if (paused) Time.timeScale = 0.0f;
         else Time.timeScale = 1.0f;
+    }
+
+    public bool Paused()
+    {
+        return paused;
     }
 }

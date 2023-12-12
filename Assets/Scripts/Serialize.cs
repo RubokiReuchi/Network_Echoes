@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using UnityEngine.Windows;
 
 
 public class Serialize : MonoBehaviour
@@ -64,6 +65,9 @@ public class Serialize : MonoBehaviour
 
         t.positionX = controlledCharacter.position.x;
         t.positionY = controlledCharacter.position.y;
+
+        if (ManagePause.instance.Paused()) inputs.paused = true;
+        else inputs.paused = false;
     }
 
 
