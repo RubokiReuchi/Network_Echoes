@@ -73,6 +73,7 @@ public class RemotePlayerController : MonoBehaviour
         rb.angularVelocity = new Vector3(0, 0, 0);
 
         ReadInputs();
+        transform.position = new Vector3(inputs.positionX, inputs.positionY, 0);
 
         if (!cutsceneOn)
         {
