@@ -10,9 +10,12 @@ public class ManagePause : MonoBehaviour
     [NonEditable] public bool paused;
 
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject remotePause;
     [SerializeField] GameObject firstButton;
 
     GameObject lastSelect;
+
+    RemoteInputs inputs;
 
     void Awake()
     {
@@ -22,8 +25,8 @@ public class ManagePause : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //pauseMenu.SetActive(false);
         paused = false;
+        inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
     }
 
     // Update is called once per frame
@@ -32,12 +35,26 @@ public class ManagePause : MonoBehaviour
         if (EventSystem.current.currentSelectedGameObject == null) EventSystem.current.SetSelectedGameObject(lastSelect);
         else lastSelect = EventSystem.current.currentSelectedGameObject;
 
-        if (Input.GetButtonDown("Pause") && !pauseMenu.activeInHierarchy)
+        if (!remotePause.activeInHierarchy && Input.GetButtonDown("Pause") && !pauseMenu.activeInHierarchy)
         {
             pauseMenu.SetActive(true);
             EventSystem.current.SetSelectedGameObject(firstButton);
             PauseGame(true);
         }
+
+        if (inputs.paused && !remotePause.activeInHierarchy)
+        {
+            remotePause.SetActive(true);
+            PauseGame(true);
+        }
+        else if (!inputs.paused && remotePause.activeInHierarchy)
+        {
+            remotePause.SetActive(false);
+            PauseGame(false);
+        }
+
+        if (pauseMenu.activeInHierarchy) inputs.paused = true;
+        else inputs.paused = false;
     }
 
     public void PauseGame(bool pause)
