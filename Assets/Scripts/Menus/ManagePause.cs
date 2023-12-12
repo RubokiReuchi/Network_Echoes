@@ -42,6 +42,8 @@ public class ManagePause : MonoBehaviour
             PauseGame(true);
         }
 
+        if (paused) return;
+
         if (inputs.paused && !remotePause.activeInHierarchy)
         {
             remotePause.SetActive(true);
