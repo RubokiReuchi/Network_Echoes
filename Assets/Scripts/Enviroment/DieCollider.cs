@@ -10,12 +10,17 @@ public class DieCollider : MonoBehaviour
     void Start()
     {
         if(gameObject.tag == "DieCollider") GetComponent<MeshRenderer>().enabled = false;
+        inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (inputs.death == true)
+        {
+            inputs.death = false;
+            Debug.Log("Player has death");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -23,6 +28,7 @@ public class DieCollider : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             FadeManager.instance.FadeIn();
+            inputs.death = true;
         }
         else if (collision.gameObject.CompareTag("Key"))
         {

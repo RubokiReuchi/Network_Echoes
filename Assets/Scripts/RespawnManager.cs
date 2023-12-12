@@ -12,9 +12,6 @@ public class RespawnManager : MonoBehaviour
 
     [NonEditable] public GameObject currentCheckpoint;
 
-    RemoteInputs inputs;
-    public GameObject[] checkpoints;
-
     void Awake()
     {
         instance = this;
@@ -23,18 +20,13 @@ public class RespawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inputs = GameObject.FindGameObjectWithTag("OnlineManager").GetComponent<RemoteInputs>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inputs.checkpoint != -1)
-        {
-            Debug.Log("new checkpoint is " + inputs.checkpoint);
-            SetCurrentSpawn(checkpoints[inputs.checkpoint]);
-            inputs.checkpoint = -1;
-        }
+        
     }
 
     public void SetCurrentSpawn(GameObject go)
