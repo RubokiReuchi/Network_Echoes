@@ -35,22 +35,22 @@ public class ManagePause : MonoBehaviour
         if (EventSystem.current.currentSelectedGameObject == null) EventSystem.current.SetSelectedGameObject(lastSelect);
         else lastSelect = EventSystem.current.currentSelectedGameObject;
 
+        if (inputs.paused && !remotePause.activeInHierarchy && !pauseMenu.activeInHierarchy)
+        {
+            remotePause.SetActive(true);
+            PauseGame(true);
+        }
+        else if (!inputs.paused && remotePause.activeInHierarchy && !pauseMenu.activeInHierarchy)
+        {
+            remotePause.SetActive(false);
+            PauseGame(false);
+        }
+
         if (!remotePause.activeInHierarchy && Input.GetButtonDown("Pause") && !pauseMenu.activeInHierarchy)
         {
             pauseMenu.SetActive(true);
             EventSystem.current.SetSelectedGameObject(firstButton);
             PauseGame(true);
-        }
-
-        if (inputs.paused && !remotePause.activeInHierarchy)
-        {
-            if (!pauseMenu.activeInHierarchy) remotePause.SetActive(true);
-            PauseGame(true);
-        }
-        else if (!inputs.paused && remotePause.activeInHierarchy)
-        {
-            if (!pauseMenu.activeInHierarchy) remotePause.SetActive(false);
-            PauseGame(false);
         }
     }
 
